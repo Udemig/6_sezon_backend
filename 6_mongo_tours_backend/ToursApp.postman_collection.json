@@ -1,0 +1,532 @@
+{
+	"info": {
+		"_postman_id": "d6aad8fe-23be-4978-9eeb-35e76e3dc00d",
+		"name": "ToursApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26044730",
+		"_collection_link": "https://winter-flare-727325.postman.co/workspace/Ders-Projeleri~f9b22d68-d0cd-4315-b34c-8c4d3aa77ae7/collection/26044730-d6aad8fe-23be-4978-9eeb-35e76e3dc00d?action=share&source=collection_link&creator=26044730"
+	},
+	"item": [
+		{
+			"name": "Tour",
+			"item": [
+				{
+					"name": "Turları Al",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cache-Control",
+								"value": "no-cache",
+								"name": "cache-control",
+								"type": "text"
+							},
+							{
+								"key": "Postman-Token",
+								"value": "<calculated when request is sent>",
+								"name": "postman-token",
+								"type": "text"
+							},
+							{
+								"key": "Host",
+								"value": "<calculated when request is sent>",
+								"name": "host",
+								"type": "text"
+							},
+							{
+								"key": "User-Agent",
+								"value": "PostmanRuntime/7.39.1",
+								"name": "user-agent",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"name": "accept",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br",
+								"name": "accept-encoding",
+								"type": "text"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive",
+								"name": "connection",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": "{{BASE_URL}}/api/tours"
+					},
+					"response": []
+				},
+				{
+					"name": "Yeni Tur Ekle",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"name\": \"The Sea Explorer\",\n        \"duration\": 7,\n        \"maxGroupSize\": 15,\n        \"difficulty\": \"medium\",\n        \"ratingsAverage\": 3.875,\n        \"ratingsQuantity\": 8,\n        \"price\": 497,\n        \"summary\": \"Exploring the jaw-dropping US east coast by foot and by boat\",\n        \"description\": \"Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\\nIrure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\",\n        \"imageCover\": \"tour-2-cover.jpg\",\n        \"images\": [\n            \"tour-2-1.jpg\",\n            \"tour-2-2.jpg\",\n            \"tour-2-3.jpg\"\n        ],\n        \"locations\": [\n            {\n                \"type\": \"Point\",\n                \"description\": \"Lummus Park Beach\",\n                \"coordinates\": [\n                    -80.128473,\n                    25.781842\n                ],\n                \"day\": 1,\n                \"_id\": \"5c88fa8cf4afda39709c2959\",\n                \"id\": \"5c88fa8cf4afda39709c2959\"\n            }\n        ],\n        \"guides\": [\n                 \"5c8a22c62f8fb814b56fa18b\"\n     \n        ],\n        \"hour\": 168,\n        \"__v\": 0,\n        \"reviews\": [\n            {\n                \"_id\": \"5c8a34ed14eb5c17645c9108\",\n                \"review\": \"Cras mollis nisi parturient mi nec aliquet suspendisse sagittis eros condimentum scelerisque taciti mattis praesent feugiat eu nascetur a tincidunt\",\n                \"rating\": 5,\n                \"tour\": \"5c88fa8cf4afda39709c2955\",\n                \"user\": {\n                    \"_id\": \"5c8a1dfa2f8fb814b56fa181\",\n                    \"name\": \"Lourdes Browning\",\n                    \"photo\": \"user-2.jpg\"\n                },\n                \"createdAt\": \"2024-08-10T09:34:53.326Z\",\n                \"updatedAt\": \"2024-08-10T09:34:53.326Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"5c8a36b714eb5c17645c910f\",\n                \"review\": \"Pulvinar taciti etiam aenean lacinia natoque interdum fringilla suspendisse nam sapien urna!\",\n                \"rating\": 4,\n                \"tour\": \"5c88fa8cf4afda39709c2955\",\n                \"user\": {\n                    \"_id\": \"5c8a1e1a2f8fb814b56fa182\",\n                    \"name\": \"Sophie Louise Hart\",\n                    \"photo\": \"user-3.jpg\"\n                },\n                \"createdAt\": \"2024-08-10T09:34:53.326Z\",\n                \"updatedAt\": \"2024-08-10T09:34:53.326Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"5c8a391f14eb5c17645c911f\",\n                \"review\": \"Sem feugiat sed lorem vel dignissim platea habitasse dolor suscipit ultricies dapibus\",\n                \"rating\": 5,\n                \"tour\": \"5c88fa8cf4afda39709c2955\",\n                \"user\": {\n                    \"_id\": \"5c8a211f2f8fb814b56fa188\",\n                    \"name\": \"Cristian Vega\",\n                    \"photo\": \"user-9.jpg\"\n                },\n                \"createdAt\": \"2024-08-10T09:34:53.326Z\",\n                \"updatedAt\": \"2024-08-10T09:34:53.326Z\",\n                \"__v\": 0\n            }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/api/tours"
+					},
+					"response": []
+				},
+				{
+					"name": "Turu Güncelle",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"duration\":10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/api/tours/5c88fa8cf4afda39709c2955"
+					},
+					"response": []
+				},
+				{
+					"name": "Turu Sil",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BASE_URL}}/api/tours/5c88fa8cf4afda39709c2955"
+					},
+					"response": []
+				},
+				{
+					"name": "1 Turu Al",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cache-Control",
+								"value": "no-cache",
+								"name": "cache-control",
+								"type": "text"
+							},
+							{
+								"key": "Postman-Token",
+								"value": "<calculated when request is sent>",
+								"name": "postman-token",
+								"type": "text"
+							},
+							{
+								"key": "Host",
+								"value": "<calculated when request is sent>",
+								"name": "host",
+								"type": "text"
+							},
+							{
+								"key": "User-Agent",
+								"value": "PostmanRuntime/7.39.1",
+								"name": "user-agent",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"name": "accept",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br",
+								"name": "accept-encoding",
+								"type": "text"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive",
+								"name": "connection",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": "{{BASE_URL}}/api/tours/5c88fa8cf4afda39709c2955"
+					},
+					"response": []
+				},
+				{
+					"name": "En İyi Fırsatlar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/api/tours/top-tours"
+					},
+					"response": []
+				},
+				{
+					"name": "Zorluğa Göre Rapor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/api/tours/tour-stats"
+					},
+					"response": []
+				},
+				{
+					"name": "Aylık Plan Raporu",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/api/tours/monthly-plan/2022"
+					},
+					"response": []
+				},
+				{
+					"name": "Tura Yorum Ekle",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"review\":\"Yorum deneeemesi\",\n    \"rating\":3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/api/tours/5c88fa8cf4afda39709c2955/reviews"
+					},
+					"response": []
+				},
+				{
+					"name": "Tura Ait Yorumları Al",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/api/tours/5c88fa8cf4afda39709c2955/reviews"
+					},
+					"response": []
+				},
+				{
+					"name": "Coğrafi Filtreleme",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/api/tours/tours-within/100/center/-112/unit/km"
+					},
+					"response": []
+				},
+				{
+					"name": "Uzaklık Hesapla",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/api/tours/distances/-112,36/unit/km"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Kullanıcıları Al",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/users?limit=3&page=2",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Cristian Vega",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Kullanıcı Al",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/api/users/66b72586c6c24b3f7e40bde9"
+					},
+					"response": []
+				},
+				{
+					"name": "Kullancı Oluştur",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "{{BASE_URL}}/api/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Kullanıcyı Sil",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BASE_URL}}/api/users/5c8a24822f8fb814b56fa192"
+					},
+					"response": []
+				},
+				{
+					"name": "Kullanıcıyı Güncelle",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"furkan00@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/api/users/66af3c14a00e98238013a451"
+					},
+					"response": []
+				},
+				{
+					"name": "Hesabımı Güncelle",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/Users/evin/Downloads/welcome.webp"
+								}
+							],
+							"options": {
+								"formdata": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/api/users/update-me"
+					},
+					"response": []
+				},
+				{
+					"name": "Hesabımı Sil",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BASE_URL}}/api/users/delete-me"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Kaydol",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Furkan\",\n    \"email\":\"furkan@gmail.com\",\n    \"password\":\"Denem@123\",\n    \"passwordConfirm\":\"Denem@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/api/users/signup"
+					},
+					"response": []
+				},
+				{
+					"name": "Giriş Yap",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"furkan@gmail.com\",\n    \"password\":\"Denem@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/api/users/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Çıkış Yap",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "{{BASE_URL}}/api/users/logout"
+					},
+					"response": []
+				},
+				{
+					"name": "Şifremi Unuttum",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"mahmut@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/api/users/forgot-password"
+					},
+					"response": []
+				},
+				{
+					"name": "Şifreyi Sıfırla",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"newPass\":\"Merhab@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:4000/api/users/reset-password/38e80b328e7c55f8b79401f27877ec3120b6105f28a4a1d290ade9a79aa183c1"
+					},
+					"response": []
+				},
+				{
+					"name": "Şifreyi Güncelle",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currentPass\":\"sdad\",\n    \"newPass\":\"asdsdsf\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/api/users/update-password"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "Yorumları Al",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/api/reviews"
+					},
+					"response": []
+				},
+				{
+					"name": "Yorum At",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"review\":\"Deniz beni tutu\",\n    \"rating\":1,\n    \"user\":\"5c8a24402f8fb814b56fa190\",\n    \"tour\":\"5c88fa8cf4afda39709c2955\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/api/reviews"
+					},
+					"response": []
+				},
+				{
+					"name": "Yorum Sil",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BASE_URL}}/api/reviews/66af52fe8a6ca46f960ef9e9"
+					},
+					"response": []
+				},
+				{
+					"name": "Yorum Güncelle",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rating\":2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/api/reviews/66af53448a6ca46f960ef9ec"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YWYzYzE0YTAwZTk4MjM4MDEzYTQ1MSIsImlhdCI6MTcyMjc2MDM1OCwiZXhwIjoxNzMwNTM2MzU4fQ.yxhzrIPuEZJ1IGai0kRA9HxsP3d5LbUbGgNFsIPBVpg"
+		}
+	}
+}
