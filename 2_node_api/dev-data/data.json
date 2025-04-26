@@ -1,0 +1,57 @@
+[
+  {
+    "id": 0,
+    "productName": "Taze Avokadolar",
+    "image": "🥑",
+    "from": "İspanya",
+    "nutrients": "B Vitamini, K Vitamini",
+    "quantity": "4 🥑",
+    "price": "6.50",
+    "organic": true,
+    "description": "Olgun bir avokado, elde hafifçe sıkıldığında yumuşaklık hissi verir. Meyve tatlı değildir, ancak belirgin ve hafif bir aromaya sahiptir, pürüzsüz bir dokusu vardır. Avokado, vejetaryen mutfağında, sandviçlerde ve salatalarda yüksek yağ içeriği nedeniyle et yerine popülerdir. Genellikle çiğ olarak servis edilir, ancak 'Hass' gibi bazı çeşitler, acılaşmadan kısa süre pişirilebilir. Meksika'ya özgü guacamole sosunun temel malzemesi olarak kullanılır ve baharatlarla birlikte mısır ekmeği veya tost üzerine sürülerek servis edilir."
+  },
+  {
+    "id": 1,
+    "productName": "Keçi ve Koyun Peyniri",
+    "image": "🧀",
+    "from": "Portekiz",
+    "nutrients": "A Vitamini, Kalsiyum",
+    "quantity": "250g",
+    "price": "5.00",
+    "organic": false,
+    "description": "Kremamsı ve belirgin bir tada sahip olan keçi peyniri, dünya genelinde sevilen bir süt ürünüdür. Keçi peyniri, yumuşak ve sürülebilir taze peynirden tuzlu ve ufalanan olgun peynire kadar geniş bir tat ve doku yelpazesine sahiptir. İnek sütünden yapılan peynirlerle aynı pıhtılaşma ve ayrıştırma işlemiyle üretilse de, keçi peyniri besin içeriği bakımından farklılık gösterir."
+  },
+  {
+    "id": 2,
+    "productName": "Apollo Brokoli",
+    "image": "🥦",
+    "from": "Portekiz",
+    "nutrients": "C Vitamini, K Vitamini",
+    "quantity": "3 🥦",
+    "price": "5.50",
+    "organic": true,
+    "description": "Brokoli, besin açısından zengin bir sebze olarak bilinir ve pek çok besin maddesi içerir. Herhangi bir sebzenin en yüksek besin değerine sahip olduğu söylenir. Diyetimize eklemek için yeşil sebzeler düşündüğümüzde, aklımıza gelen ilk sebzelerden biri brokolidir. Brokoli, Brüksel lahanası ve kara lahana gibi sebzeleri içeren turpgiller ailesinin bir parçasıdır. Tatları farklı olsa da, brokoli ve bu diğer sebzeler aynı aileye aittir."
+  },
+  {
+    "id": 3,
+    "productName": "Bebek Havuçlar",
+    "image": "🥕",
+    "from": "Fransa",
+    "nutrients": "A Vitamini, K Vitamini",
+    "quantity": "20 🥕",
+    "price": "3.00",
+    "organic": true,
+    "description": "Havuç, mükemmel bir sağlık gıdası olduğu sıkça iddia edilen bir kök sebzedir. Kıtır kıtır, lezzetli ve oldukça besleyicidir. Havuçlar, özellikle beta-karoten, lif, K vitamini, potasyum ve antioksidanlar açısından zengindir. Havuçların birçok sağlık faydası vardır. Kilo vermeye yardımcı bir gıda olarak bilinir ve düşük kolesterol seviyeleri ile göz sağlığının iyileştirilmesi ile ilişkilendirilir."
+  },
+  {
+    "id": 4,
+    "productName": "Tatlı Mısır Koçanları",
+    "image": "🌽",
+    "from": "Almanya",
+    "nutrients": "C Vitamini, Magnezyum",
+    "quantity": "2 🌽",
+    "price": "2.00",
+    "organic": false,
+    "description": "Mısır olarak da bilinen buğdaygillerden biri olan mısır, dünyanın en popüler tahıl tanelerinden biridir. Patlamış mısır ve tatlı mısır yaygın olarak tüketilen çeşitleridir, ancak işlenmiş mısır ürünleri de genellikle gıdalarda bileşen olarak kullanılır. Bunlar arasında tortilla, tortilla cipsi, polenta, mısır unu, mısır şurubu ve mısır yağı yer alır. Tam tahıllı mısır, lif ve birçok vitamin, mineral ve antioksidan açısından zengin, sağlıklı bir tahıl olarak kabul edilir."
+  }
+]
