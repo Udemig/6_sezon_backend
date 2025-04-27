@@ -176,24 +176,29 @@ exports.getDistances = c(async (req, res, next) => {
   }
 
   // unit'e göre doğru çarpanı tanımla
-  const multiplier = unit === "mi" ? 1 : 1;
+  const multiplier = unit === "mi" ? 0.000621371 : 0.001;
 
   // turların merkez noktaya uzaklıklarını hesapla
   const distances = await Tour.aggregate([
     // 1) uzaklığı hesapla
     {
       $geoNear: {
-        near: { type: "Point", coordinates: [lng, lat] },
+        near: { type: "Point", coordinates: [+lng, +lat] },
         distanceField: "distance",
         distanceMultiplier: multiplier,
       },
     },
+    // 2) nesneden istediğimiz değerleri seç
+    {
+      $project: {
+        name: 1,
+        distance: 1,
+      },
+    },
   ]);
 
-  //! todo hatayı çöz
-
   // client'a cevap olarak gönder
-  res.json({
+  return res.json({
     message: "Uzaklıklar Hesaplandı",
     distances,
   });

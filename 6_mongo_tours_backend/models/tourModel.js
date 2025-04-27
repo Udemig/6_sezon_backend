@@ -181,7 +181,7 @@ tourSchema.pre("find", function (next) {
 // Raporlama işlemlerinden önce veya sonra çalıştırılan middleware'lere verilen isim
 tourSchema.pre("aggregate", function (next) {
   // premium olanların rapora dahil edilmemesi için aggregation pipeline'a başlangıç adımı olarak premium'ları çıkaran bir adım ekliyecez
-  this.pipeline().unshift({ $match: { premium: { $ne: true } } });
+  this.pipeline().push({ $match: { premium: { $ne: true } } });
 
   next();
 });

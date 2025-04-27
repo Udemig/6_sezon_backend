@@ -1,10 +1,86 @@
+const multer = require("multer");
 const User = require("../models/userModel");
 const c = require("../utils/catchAsync");
 const e = require("../utils/error");
 const { filterObject } = require("../utils/filterObject");
 const factory = require("./handlerFactory");
+const sharp = require("sharp");
+
+// diskstorage kurulum (dosyları diske kaydetmeye yarar)
+// const multerStorage = multer.diskStorage({
+//   // dosyanın yükleneceği klasörü belirle
+//   destination: function (req, file, cb) {
+//     cb(null, "public/img/users");
+//   },
+
+//   // dosyanın ismi
+//   filename: function (req, file, cb) {
+//     // dosya uzantısını belirle
+//     const ext = file.mimetype.split("/")[1];
+//     // dosya ismini belirle
+//     cb(null, `${req.user.id}-${Date.now()}.${ext}`);
+//   },
+// });
+
+// memory storage kurulumu (resimleri buffer veritipinde RAM'de saklar)
+const multerStorage = multer.memoryStorage();
+
+// multer kurulum (client'tan gelen dosyalara erişmemizi sağlayacak)
+const upload = multer({
+  storage: multerStorage,
+});
+
+// dosyalara erişip yükleme işlemibi yapıcak mw
+exports.uploadUserPhoto = upload.single("avatar");
+
+// dosyayı yeniden boyulandırıcak olan mw
+exports.resize = (req, res, next) => {
+  // eğer dosya seçilmediyse bu adımı atla
+  if (!req.file) return next();
+
+  // işlenmiş dosyasının ismini belirle
+  const filename = `${req.user.id}-${Date.now()}.webp`;
+
+  // dosya işle ve yükle
+  sharp(req.file.buffer) // buffer veritipindeki resmi alır
+    .resize(400, 400) // yeniden boyutlandırma yapar
+    .toFormat("webp") // dosya formatını değiştir
+    .webp({ quality: 70 }) // kaliteyi düşür
+    .toFile(`public/img/users/${filename}`); // dosyayı diske kaydeder
+
+  // sonraki adımda dosya ismine eirşmek için req'i güncelle
+  req.file.path = filename;
+
+  next();
+};
+
+// kullanıcı bilgilerini güncelle
+exports.updateMe = c(async (req, res, next) => {
+  // 1) şifre güncellemeye çalışırsa hata ver
+  if (req.body.password || req.body.passwordConfirm) {
+    return next(e(400, "Şifreyi bu endpoint ile güncelleyemezsiniz"));
+  }
+
+  // 2) isteğin body kısmından sadece izin verilen değerleri al
+  const filtredBody = {
+    name: req.body.name,
+  };
+
+  // 2.1) eğer isteğin içerisinde avatar değeri varsa body verisi için sisteme yüklediğimiz resmin ismini ekle
+  if (req.file) filtredBody.photo = req.file.path;
+
+  // 3) kullanıcı bilgilierini günelle
+  const updated = await User.findByIdAndUpdate(req.user.id, filtredBody, {
+    new: true,
+  });
+
+  // 4) client'a cevap gönder
+  return res.json({ message: "hesap bilgileri güncellendi", updated });
+});
 
 exports.getAllUsers = factory.getAll(User);
+
+exports.deleteUser = factory.deleteOne(User);
 
 exports.createUser = c(async (req, res) => {
   const { name, email, active, photo, password, role } = req.body;
@@ -90,5 +166,3 @@ exports.activateAccount = c(async (req, res, next) => {
     message: `Hesap başarıyla ${active ? "aktifleştirildi." : "askıya alındı."}`,
   });
 });
-
-exports.deleteUser = factory.deleteOne(User);

@@ -97,3 +97,40 @@
 - Oluşturulan her index veritbanında yer kapladığından dolayı kullanıcıların en çok hangi değerlere göre filtreleme/sıralama yapıcağını analiz edip indexleri ona göre oluşturmak gerekir.
 - Schema'da unique kullandığınız zaman oto. olarak o alan için bir index oluşturur.
 - Index hem kod üzerinde hemde compass uygulaması üzerinden oluşturabilir.
+
+# Medya Depolama
+
+## 1.Yol - Dosya Sistemi Üzerinden Sunucuda Depolama
+
+- Avantaj:
+- - Basit kolay
+- - Düşük Maaliyet
+- - Kontrol Bizde
+- - Hız: Sunucu ile dosya aynı yerel ağda olduğu için erişim hızlı
+
+- Dezavantaj:
+- - Ölçeklenemiyor
+- - Bakım: Yedeklemesi vs. bizim sorumluluğumuzda ve arıza durumda veri kaybedebiliriz.
+- - Dağıtık erişim yok
+
+## 2.Yol - Bulut Depolama (Amazon S3, Google Cloud, Firebase Storage...)
+
+- Avantaj
+- - Güvenlik
+- - Ölçeklenebilir
+- - Bakım
+- - Dağıtık erişim var
+
+- Dezanataj
+- - Maaliyet
+- - Bağımlılık
+
+# Multer
+
+- Node.js'de client'tan gelen medya içeriğini yönetmek için kullanıcağımız kütüphane
+
+# Sharp
+
+- kullanıcı 4k çözünürlükte 30-40mb foğrafı profil fotoğrafı yapmaya çalışabilir
+- proje içerisinde profil fotoğrafları genelde 40x40 80x80 boyutlarında kullanılır ana fotoğrafı seçerken 2560x1680 gibi yüksek kaltire fotoğraf seçebilir ve herhangi bir işlemden geçirmeden sunucuya kaydedersek gereksiz yer kağlar.
+- Bu yüzden yüklnicek olan fotoğrafın çözünürlüğünü proedeki max boyuta indiricez

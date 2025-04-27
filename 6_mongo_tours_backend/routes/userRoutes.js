@@ -6,7 +6,8 @@ const router = express.Router();
 
 const { signUp, login, logout, forgotPassword, resetPassword, updatePassword, protect, restrictTo } = authController;
 
-const { getAllUsers, getUser, createUser, updateUser, deleteUser, activateAccount } = userController;
+const { getAllUsers, getUser, createUser, updateUser, deleteUser, activateAccount, updateMe, uploadUserPhoto, resize } =
+  userController;
 
 router.post("/signup", signUp);
 
@@ -25,6 +26,8 @@ router.post("/activate/:id", protect, restrictTo("admin"), activateAccount);
 // burada yazdığımız protect satırının altındaki bütün istekler protect'ten etkilenecek,
 // yani giriş yapmayan kullanıcı istek atamayacak
 router.use(protect);
+
+router.patch("/update-me", uploadUserPhoto, resize, updateMe);
 
 router.route("/").get(restrictTo("admin"), getAllUsers).post(restrictTo("admin"), createUser);
 
