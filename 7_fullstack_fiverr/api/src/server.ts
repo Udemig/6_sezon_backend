@@ -1,45 +1,32 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import authRouter from './routes/auth.routes.ts'
-import gigRouter from './routes/gig.routes.ts'
-import errorMiddleware from './helpers/error.ts'
-import globalErrorHandler from "./middlewares/globalErrorHandler.ts";
+import authRoutes from "./routes/auth.routes";
 
-// env dosyası değişikliklerine erişim sağlar
+// env dosyasındaki değişkenle erişebilmek için kurulum
 dotenv.config();
 
-
-//veritabanı bağlantısı kuralım
-
+// veritabanı ile bağlantı kur
 mongoose
-    .connect(process.env.DATABASE_URL as string)
-    .then(()=>console.log("\n\n Veritabanı bağlantısı kuruldu \n\n"))
-    .catch((err)=>console.log("\n\n Veritabanına bağlanılamadı \n\n", err))
+  .connect(process.env.MONGO_URI as string)
+  .then(() => console.log("🔥Veritabanına Bağlantı Başarılı🔥"))
+  .catch(() => console.log("😡Veritabanına Bağlantı Başarısız😡"));
 
-
-//express sunucumuzu belirliyoruz
+// express uygulaması başlat
 const app = express();
 
-// middlewareler
-app.use(express.json())
+// middleware'ler
+app.use(express.json()); // isteğin içeriğinde gelen verileri js formatına çeviren mw
 
+// deneme route'u
+app.get("/", (req, res) => {
+  res.json({ message: "Backend Hayatta..." });
+});
 
+// route'ları projeye tanıt
+app.use("/api/auth", authRoutes);
 
-
-// route'ları kullanıyoruz
-app.use("/api/auth",authRouter)
-app.use('/api/gigs',gigRouter)
-
-
-
-
-// hata yönetimi middleware'i, en sonda belirliyoruz ki bütün hataları yakalayabilsin
-app.use(globalErrorHandler)
-
-
-//express sunucumuzu ayağa kaldırıyoruz || bu komut yürüdükten sonra bu IP ve porta istek atılabilir ve cevap alınabilir
-
-app.listen(process.env.PORT, ()=>{
-    console.log(`Sunucu ${process.env.PORT} portunu dinlemeye başladı.`)
-})
+// dinlemeye başla
+app.listen(process.env.PORT, () => {
+  console.log(`🎾 Server ${process.env.PORT} portunu dinlemeye başladı 🎾`);
+});

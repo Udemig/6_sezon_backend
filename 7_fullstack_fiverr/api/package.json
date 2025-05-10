@@ -1,39 +1,38 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "main": "index.js",
   "type": "module",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./src/server.ts"
+    "dev": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
-    "@types/cookie-parser": "^1.4.8",
-    "@types/cors": "^2.8.17",
-    "@types/dotenv": "^6.1.1",
-    "@types/jsonwebtoken": "^9.0.9",
-    "@types/mongoose": "^5.11.96",
-    "@types/multer": "^1.4.12",
     "bcrypt": "^5.1.1",
-    "cloudinary": "^2.6.0",
+    "cloudinary": "^2.6.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "json-web-token": "^3.2.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.14.1",
-    "multer": "^1.4.5-lts.2",
-    "tsx": "^4.19.4"
+    "mongoose": "^8.14.2",
+    "multer": "^1.4.5-lts.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.18",
+    "@types/dotenv": "^8.2.3",
     "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/mongoose": "^5.11.97",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.15.17",
     "nodemon": "^3.1.10",
+    "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   }
 }

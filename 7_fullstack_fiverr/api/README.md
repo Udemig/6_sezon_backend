@@ -1,44 +1,28 @@
-# Kütüphanelerimiz
+## Kütüphaneler
 
-mongoose
+- mongoose
+- express
+- bcrypt
+- jsonwebtoken
+- cookie-parser
+- cors
+- multer
+- cloudinary
+- dotenv
 
-express
+## Geliştirici Kütüphaneler (dev dependency)
 
-bcrypt
+- build anında kendini imha edern kütüphaneler.
 
-cookie-parser
-
-cors
-
-json-web-token
-
-multer
-
-cloudinary
-
-tsx
-
-
-Geliştirici Bağımlılıkları:
-
-typescript
-
-nodemon
-
-@types/bcrypt
-
-@types/express
-
-@types/cookie-parser
-
-@types/cors
-
-@types/jsonwebtoken
-
-@types/multer
-
-@types/cloudinary
-
-@types/mongoose
-
-@types/dotenv
+- typescript
+- nodemon
+- tsx
+- @types/mongoose
+- @types/bcrypt
+- @types/express
+- @types/cors
+- @types/cookie-parser
+- @types/jsonwebtoken
+- @types/node
+- @types/multer
+- @types/dotenv
