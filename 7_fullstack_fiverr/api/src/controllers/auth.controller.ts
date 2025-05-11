@@ -3,20 +3,25 @@ import bcrypt from "bcrypt";
 import { LoginReq, RegisterReq } from "../types";
 import User from "../models/user.model";
 import jwt from "jsonwebtoken";
+import upload from "../utils/cloudinary";
 
 // ----------- Kaydol ---------------- Yeni Hesap Oluştur
 const register = async (req: RegisterReq, res: Response): Promise<void> => {
   // şifreyi saltla ve hashla
   const hashedPass: string = bcrypt.hashSync(req.body.password, 12);
 
+  // fotoğrafı buluta yükle
+  const image = await upload(req.file?.path as string, "avatars", 200, 200, "fill", "auto");
+
   // kullanıcıyı veritbanına kaydet
   const newUser = await User.create({
     ...req.body,
     password: hashedPass,
+    profilePicture: image.secure_url,
   });
 
   // client'a cevap gönder
-  res.json({ message: "Hesabınız Oluşturuldul", user: newUser });
+  res.json({ message: "Hesabınız Oluşturuldu", user: newUser });
 };
 
 // ----------- Giriş Yap ------------- Mevcut Hesapta Oturum Aç
@@ -28,7 +33,7 @@ const login = async (req: LoginReq, res: Response): Promise<void> => {
 
   // kullanıcı bulunumazsa hata gönder
   if (!user) {
-    res.status(404).json({ message: "Bu isimde kullanıcı bulunmadı" });
+    res.status(404).json({ message: "Giriş bilgileriniz yanlış" });
     return;
   }
 
@@ -37,25 +42,49 @@ const login = async (req: LoginReq, res: Response): Promise<void> => {
 
   // şifreler aynı değilse hata gönder
   if (!isPassCorrect) {
-    res.status(404).json({ message: "Yanlış şifre girdiniz" });
+    res.status(404).json({ message: "Giriş bilgileriniz yanlış" });
     return;
   }
 
   // şifreler aynı ise jwt tokeni oluştur
-  const token = jwt.sign({ id: user._id, isSeller: user.isSeller }, process.env.JWT_SECRET as string);
+  const token = jwt.sign({ id: user._id, isSeller: user.isSeller }, process.env.JWT_SECRET as string, {
+    expiresIn: Number(process.env.JWT_EXPIRES),
+  });
 
   // token'ı ve diğer bilgieri client'a gönder
-  res.json({ message: "Giriş Yapıldı", token });
+  res
+    .cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      expires: new Date(Date.now() + 14 * 24 * 3600 * 1000),
+    })
+    .json({ message: "Giriş Yapıldı", user });
 };
 
 // ----------- Çıkış Yap ------------- Mevcut Oturumu Kapat
 const logout = async (req: Request, res: Response): Promise<void> => {
-  res.json({ message: "Çıkış Yapıldı" });
+  res.clearCookie("token").status(200).json({
+    message: "Hesaptan çıkış yapıldı",
+  });
 };
 
 // ----------- Profile --------------- Profil Bilgilerini Görünütüle
 const getProfile = async (req: Request, res: Response): Promise<void> => {
-  res.json({ message: "Profile Verileriniz Hazırlandı" });
+  // protect mw'den gelen req nesnesi içerisindeki kullanıcı id'sinden yola çıkarak kullanıcının bilgilerini sorguladık
+  const user = await User.findById(req.userId);
+
+  // eğer kullanıcı bulunamadıysa
+  if (!user) {
+    res.status(404).json({ message: "Kullanıcı bulunamadı" });
+    return;
+  }
+
+  // client'a cevap gönder
+  res.status(200).json({
+    message: "Profile Verileriniz Hazırlandı",
+    user,
+  });
 };
 
 export { register, login, logout, getProfile };

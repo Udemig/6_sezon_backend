@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes";
+import cookieParser from "cookie-parser";
 
 // env dosyasındaki değişkenle erişebilmek için kurulum
 dotenv.config();
@@ -17,6 +18,7 @@ const app = express();
 
 // middleware'ler
 app.use(express.json()); // isteğin içeriğinde gelen verileri js formatına çeviren mw
+app.use(cookieParser());
 
 // deneme route'u
 app.get("/", (req, res) => {

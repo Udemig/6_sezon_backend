@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  --color-f-green: "#0a4226";
+}
+
+@layer components {
+  .max {
+    @apply max-w-[1440px] mx-auto;
+  }
+
+  .input-field {
+    @apply bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5 focus:border-blue-500 disabled:bg-gray-200;
+  }
+
+  .title {
+    @apply text-xl md:text-2xl text-gray-500 font-bold mb-5;
+  }
+
+  .form-button {
+    @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full  sm:w-auto px-5 py-2.5;
+  }
+
+  .button {
+    @apply py-1 px-3 rounded-md transition hover:brightness-75 text-white min-w-20;
+  }
+}
