@@ -4,6 +4,11 @@ import Register from "./pages/register";
 import Login from "./pages/login";
 import Header from "./components/header";
 import Footer from "./components/footer";
+import MyGigs from "./pages/my-gigs";
+import Search from "./pages/search";
+import Detail from "./pages/detail";
+import AddGig from "./pages/add-gig";
+import Protected from "./components/protected";
 
 const App = () => {
   return (
@@ -16,6 +21,14 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/detail/:id" element={<Detail />} />
+
+            {/* Sadece satıcı hesapları erişebilmeli */}
+            <Route element={<Protected />}>
+              <Route path="/my-gigs" element={<MyGigs />} />
+              <Route path="/add-gig" element={<AddGig />} />
+            </Route>
           </Routes>
         </div>
 

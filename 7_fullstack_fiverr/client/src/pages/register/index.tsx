@@ -2,9 +2,12 @@ import { Link } from "react-router-dom";
 import Input from "../../components/form/input";
 import Toggle from "../../components/form/toggle";
 import { useState, type FormEvent } from "react";
+import { useRegister } from "../../service/auth";
+import type { IRegisterData } from "../../types";
 
 const Register = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const { mutate, isPending } = useRegister();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -13,13 +16,13 @@ const Register = () => {
     const formData = new FormData(e.currentTarget);
 
     // bütün inputlardaki verileri al
-    const userData = Object.fromEntries(formData.entries());
+    const userData = Object.fromEntries(formData.entries()) as unknown as IRegisterData;
 
     // satıcı hesabıb bilgisini nesne içerisne ekle
-    const newUser = { ...userData, isSeller: isChecked };
+    userData.isSeller = isChecked;
 
     // api'a kaydolma isteği at
-    console.log(newUser);
+    mutate(userData);
   };
 
   return (
@@ -43,7 +46,7 @@ const Register = () => {
           <Input label="Telefon" name="phone" disabled={!isChecked} required={!isChecked} />
           <Input label="Açıklama" name="description" disabled={!isChecked} required={!isChecked} type="textarea" />
 
-          <button type="submit" className="form-button">
+          <button disabled={isPending} type="submit" className="form-button">
             Kaydol
           </button>
 

@@ -1,7 +1,13 @@
+import Category from "./category";
+import Hero from "./hero";
+import Info from "./info";
+
 const Home = () => {
   return (
     <div>
-      <h1 className="text-3xl text-center my-20">Anasayfa</h1>
+      <Hero />
+      <Category />
+      <Info />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 // env dosyasındaki değişkenle erişebilmek için kurulum
 dotenv.config();
@@ -17,6 +18,14 @@ mongoose
 const app = express();
 
 // middleware'ler
+app.use(
+  cors({
+    origin: "http://localhost:5174",
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
 app.use(express.json()); // isteğin içeriğinde gelen verileri js formatına çeviren mw
 app.use(cookieParser());
 
