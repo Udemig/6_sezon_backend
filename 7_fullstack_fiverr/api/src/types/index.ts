@@ -20,4 +20,30 @@ type RegisterReq = Request<{}, {}, RegisterBody>;
 
 type LoginReq = Request<{}, {}, LoginBody>;
 
-export { RegisterReq, LoginReq };
+type ExtendedFiles = {
+  coverImage: { path: string }[];
+  images: { path: string }[];
+};
+
+type Query = {
+  category?: string;
+  userId?: string;
+  min?: string;
+  max?: string;
+  search?: string;
+};
+
+type Filters = {
+  category?: string;
+  user?: string;
+  packagePrice?: {
+    $gte?: string;
+    $lte?: string;
+  };
+  title?: {
+    $regex: string;
+    $options: string;
+  };
+};
+
+export { RegisterReq, LoginReq, ExtendedFiles, Query, Filters };

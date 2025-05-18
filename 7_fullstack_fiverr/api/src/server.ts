@@ -2,8 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes";
+import gigRoutes from "./routes/gig.routes";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import errorHandler from "./middlewares/errorHandler";
 
 // env dosyasındaki değişkenle erişebilmek için kurulum
 dotenv.config();
@@ -36,6 +38,10 @@ app.get("/", (req, res) => {
 
 // route'ları projeye tanıt
 app.use("/api/auth", authRoutes);
+app.use("/api/gigs", gigRoutes);
+
+// hata yönetimi için middleware
+app.use(errorHandler);
 
 // dinlemeye başla
 app.listen(process.env.PORT, () => {
