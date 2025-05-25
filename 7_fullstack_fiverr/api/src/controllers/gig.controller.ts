@@ -55,10 +55,10 @@ export const createGig = c(async (req: Request, res: Response, next: NextFunctio
   const files = req.files as unknown as ExtendedFiles;
 
   // kapak fotoğrafını clouinary'e yükle
-  const coverImage = await upload(next, files.coverImage[0].path, "gig-images", 900, 400, "fill", "80");
+  const coverImage = await upload(next, files.coverImage[0].path, "gig-images", 900, 600, "fill", "80");
 
   // diğer fotoğraflar için promise'ler oluştur
-  const promises = files.images.map((image) => upload(next, image.path, "gig-images", 900, 400, "fill", "80"));
+  const promises = files.images.map((image) => upload(next, image.path, "gig-images", 900, 600, "fill", "80"));
 
   // bütün resimleri tek seferde yükleyip sonuçları al
   const images = await Promise.all(promises);
@@ -75,7 +75,7 @@ export const createGig = c(async (req: Request, res: Response, next: NextFunctio
 
   res.status(201).json({
     message: "Hizmet başarıyla oluşturuldu",
-    body: savedGig,
+    gig: savedGig,
   });
 });
 

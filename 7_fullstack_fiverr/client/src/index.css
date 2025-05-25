@@ -2,6 +2,7 @@
 
 @theme {
   --color-mint-500: oklch(0.72 0.11 178);
+  --color-f-green: #0a4226;
 }
 
 @layer components {
@@ -27,5 +28,13 @@
 
   .header-link {
     @apply px-5 py-2 hover:bg-gray-100;
+  }
+
+  .layout {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 my-5;
+  }
+
+  .warning {
+    @apply py-10 px-5 text-lg rounded-lg bg-orange-500/50 text-white text-center my-40;
   }
 }

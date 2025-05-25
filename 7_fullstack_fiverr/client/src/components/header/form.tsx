@@ -11,7 +11,9 @@ const Form = () => {
 
     const text = e.currentTarget.search.value;
 
-    navigate(`/search?query=${text}`);
+    if (!text.trim()) return;
+
+    navigate(`/search?query=${text.trim()}`);
   };
 
   return (

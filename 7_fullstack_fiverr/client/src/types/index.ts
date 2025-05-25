@@ -23,6 +23,8 @@ interface IUser {
   country: string;
   profilePicture: string;
   isSeller: boolean;
+  description?: string;
+  phone?: string;
   createdAt: string;
   updatedAt: string;
   id: string;
@@ -51,4 +53,62 @@ interface IInput {
   max?: number;
 }
 
-export type { ILoginData, IRegisterData, IUser, AuthResponse, ICategory, IInfo, IInput };
+// Gig Verileri İçin
+interface IGig<T> {
+  _id: string;
+  user: T;
+  title: string;
+  description: string;
+  reviewCount: number;
+  starCount: number;
+  category: string;
+  coverImage: string;
+  images: string[];
+  packageTitle: string;
+  packageDescription: string;
+  packagePrice: number;
+  packageFeatures: string[];
+  packageDuration: number;
+  packageRevisions: number;
+  createdAt: string;
+  updatedAt: number;
+  __v: 0;
+}
+
+interface ShortUser {
+  username: string;
+  profilePicture: string;
+  id: string;
+}
+
+interface GetAllGigsResponse {
+  message: string;
+  results: number;
+  gigs: IGig<ShortUser>[];
+}
+interface GetOneGigResponse {
+  message: string;
+  gig: IGig<IUser>;
+}
+
+interface GigFormData {}
+
+interface GetAllGigsParams {
+  category: string | null;
+  search: string | null;
+}
+
+export type {
+  ILoginData,
+  IRegisterData,
+  IUser,
+  AuthResponse,
+  ICategory,
+  IInfo,
+  IInput,
+  IGig,
+  GetAllGigsResponse,
+  GetOneGigResponse,
+  GetAllGigsParams,
+  GigFormData,
+};
