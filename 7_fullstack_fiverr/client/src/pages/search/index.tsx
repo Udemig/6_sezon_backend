@@ -5,7 +5,7 @@ import Title from "./title";
 import Loader from "../../components/loader";
 import Error from "../../components/error";
 import Card from "../../components/card";
-import type { AxiosError } from "axios";
+import type { Err } from "../../types";
 
 const Search: FC = () => {
   const [searchParams] = useSearchParams();
@@ -30,7 +30,7 @@ const Search: FC = () => {
       {isLoading ? (
         <Loader designs="my-40" />
       ) : error ? (
-        <Error error={error as AxiosError<{ message?: string }>} refetch={refetch} />
+        <Error error={error as Err} refetch={refetch} />
       ) : (
         <div className="layout">
           {data?.map((item) => (

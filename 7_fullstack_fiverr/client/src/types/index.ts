@@ -1,3 +1,4 @@
+import type { AxiosError } from "axios";
 import type { JSX } from "react";
 import type { IconType } from "react-icons/lib";
 
@@ -94,9 +95,12 @@ interface GetOneGigResponse {
 interface GigFormData {}
 
 interface GetAllGigsParams {
-  category: string | null;
-  search: string | null;
+  category?: string | null;
+  search?: string | null;
+  userId?: string;
 }
+
+interface Err extends AxiosError<{ message: string }> {}
 
 export type {
   ILoginData,
@@ -107,8 +111,10 @@ export type {
   IInfo,
   IInput,
   IGig,
+  ShortUser,
   GetAllGigsResponse,
   GetOneGigResponse,
   GetAllGigsParams,
   GigFormData,
+  Err,
 };

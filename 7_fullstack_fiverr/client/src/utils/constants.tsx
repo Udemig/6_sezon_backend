@@ -63,14 +63,14 @@ export const inputs: IInput[] = [
   },
   {
     label: "Revizyon Sayısı",
-    name: "package_revisions",
+    name: "packageRevisions",
     required: true,
     type: "number",
     min: 1,
   },
   {
     label: "Özellikler (',' ile ayırınız)",
-    name: "package_features",
+    name: "packageFeatures",
     required: true,
     type: "textarea",
   },
@@ -82,17 +82,17 @@ export const inputs: IInput[] = [
   },
   {
     label: "Paket Açıklaması",
-    name: "package_description",
+    name: "packageDescription",
     required: true,
   },
   {
     label: "Paket Başlığı",
-    name: "package_title",
+    name: "packageTitle",
     required: true,
   },
   {
     label: "Teslimat Süresi (gün)",
-    name: "package_duration",
+    name: "packageDuration",
     required: true,
     type: "number",
     min: 1,
@@ -100,7 +100,7 @@ export const inputs: IInput[] = [
   },
   {
     label: "Fiyat ($)",
-    name: "package_price",
+    name: "packagePrice",
     type: "number",
     required: true,
     min: 1,

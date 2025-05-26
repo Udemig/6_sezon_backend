@@ -28,7 +28,7 @@ const PackageInfo: FC<Props> = ({ gig }) => {
         </p>
         <p className="flex items-center gap-2">
           <GiRecycle className="text-lg" />
-          {gig.packageDuration} günde teslimat
+          {gig.packageRevisions} revizyon
         </p>
       </div>
 

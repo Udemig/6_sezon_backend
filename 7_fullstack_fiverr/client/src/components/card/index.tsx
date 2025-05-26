@@ -1,17 +1,19 @@
 import type { FC } from "react";
-import type { IGig } from "../../types";
+import type { IGig, ShortUser } from "../../types";
 import { Link } from "react-router-dom";
 import Rating from "./rating";
+import Button from "./button";
 
 interface Props {
-  item: IGig;
+  item: IGig<ShortUser>;
+  expand?: boolean;
 }
 
-const Card: FC<Props> = ({ item }) => {
-  console.log(item);
-
+const Card: FC<Props> = ({ item, expand = false }) => {
   return (
     <div>
+      <Button id={item._id} show={expand} />
+
       <Link to={`/detail/${item._id}`} className="p-2 rounded-md cursor-pointer flex flex-col gap-2 group">
         <img src={item.coverImage} alt={item.title} className="size-full object-cover rounded-md max-h-[200px]" />
 

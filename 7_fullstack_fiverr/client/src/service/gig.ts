@@ -1,5 +1,5 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import type { GetAllGigsParams, GetAllGigsResponse, GetOneGigResponse, GigFormData } from "../types";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { GetAllGigsParams, GetAllGigsResponse, GetOneGigResponse } from "../types";
 import api from "./axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 const gigService = {
   getAll: (params?: GetAllGigsParams) => api.get<GetAllGigsResponse>("/gigs", { params }),
   getOne: (id: string) => api.get<GetOneGigResponse>(`/gigs/${id}`),
-  create: (body: GigFormData) => api.post<GetOneGigResponse>(`/gigs`, body),
+  create: (body: FormData) => api.post<GetOneGigResponse>(`/gigs`, body),
   delete: (id: string) => api.delete(`/gigs/${id}`),
 };
 
@@ -29,12 +29,12 @@ const useGetOneGig = (id: string) =>
   });
 
 // yeni hizmet oluştur
-const useCreateGig = (body: GigFormData) => {
+const useCreateGig = () => {
   const navigate = useNavigate();
 
   return useMutation({
     mutationKey: ["createGig"],
-    mutationFn: () => gigService.create(body),
+    mutationFn: (body: FormData) => gigService.create(body),
     onSuccess: (res) => {
       navigate(`/detail/${res.data.gig._id}`);
       toast.success("Hizmet başarıyla oluşturuldu");
@@ -48,11 +48,15 @@ const useCreateGig = (body: GigFormData) => {
 
 // hizmeti kaldır
 const useDeleteGig = (id: string) => {
+  const client = useQueryClient();
+
   return useMutation({
     mutationKey: ["deletGig"],
     mutationFn: () => gigService.delete(id),
     onSuccess: () => {
       toast.success("Hizmet başarıyla kaldırıldı");
+      // useGetAllGigs api isteğini tekrardan tetikler
+      client.invalidateQueries({ queryKey: ["gigs"] });
     },
     onError: (error) => {
       console.log(error);
