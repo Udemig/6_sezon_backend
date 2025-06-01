@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import bcrypt from "bcrypt";
-import { LoginReq, RegisterReq } from "../types";
-import User from "../models/user.model";
+import bcrypt from "bcryptjs";
+import { LoginReq, RegisterReq } from "../types/index.js";
+import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
-import upload from "../utils/cloudinary";
-import c from "../utils/catch-async";
-import e from "../utils/error";
+import upload from "../utils/cloudinary.js";
+import c from "../utils/catch-async.js";
+import e from "../utils/error.js";
 
 // ----------- Kaydol ---------------- Yeni Hesap Oluştur
 const register = c(async (req: RegisterReq, res: Response, next: NextFunction): Promise<void> => {

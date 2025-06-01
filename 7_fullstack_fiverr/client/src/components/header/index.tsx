@@ -6,7 +6,7 @@ import { useProfile } from "../../service/auth";
 import type { FC } from "react";
 
 const Header: FC = () => {
-  const { user, isLoading } = useProfile();
+  const { user } = useProfile();
 
   return (
     <header className="p-5 shadow">
@@ -17,7 +17,9 @@ const Header: FC = () => {
 
         <Form />
 
-        <div className="flex items-center gap-2 relative group">{user ? <User user={user} /> : <Links />}</div>
+        <div className="flex items-center gap-2 relative group">
+          {user ? <User user={user} /> : <Links />}
+        </div>
       </div>
     </header>
   );

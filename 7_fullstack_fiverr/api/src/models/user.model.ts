@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { defaultProfile } from "../utils/constants";
+import { defaultProfile } from "../utils/constants.js";
 
 // kullanıcı belgesinin typescrip tipi
 export interface IUser {

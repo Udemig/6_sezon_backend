@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import e from "../utils/error";
-import c from "../utils/catch-async";
-import upload from "../utils/cloudinary";
+import e from "../utils/error.js";
+import c from "../utils/catch-async.js";
+import upload from "../utils/cloudinary.js";
 import { ExtendedFiles, Filters, Query } from "../types";
-import { Gig } from "../models/gig.model";
+import { Gig } from "../models/gig.model.js";
 
 // arama parametrelerinden gelen filtrrleri mongoose'a uygun formata getiren fonksiyon
 const buildFilters = (query: Query): Filters => {

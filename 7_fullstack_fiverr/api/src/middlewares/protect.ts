@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import e from "../utils/error";
+import e from "../utils/error.js";
 
 // Cookie ile gelen JWT Token'ı üzerinden kullanıcının kimiliğini doğrulayacak mw
 const protect = (req: Request, res: Response, next: NextFunction): void => {

@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
 import { NextFunction } from "express";
-import e from "../utils/error";
+import e from "../utils/error.js";
 
 dotenv.config();
 

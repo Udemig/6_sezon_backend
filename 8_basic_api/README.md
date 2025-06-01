@@ -56,4 +56,21 @@
 - Docker Image çalıştırma (container oluşturur)
 - `docker run -p 3000:3000 basic-api`
 
-- TODO: Docker Hub'a Proje yükleme
+## Docker Hub'a Proje yükleme
+
+- Docker'a login ol
+- `docker login`
+
+- Docker huba yüklemek için repo oluştur
+- `docker tag local_image:etiket username/repo:etiket`
+
+- Okuşturduğumuz repoya image'ı pushla
+- `docker push username/repo:etiket`
+
+## Docker Hub'dan proje çekme
+
+- Projeyi docker hub'dan image'ı çek
+- `docker pull username/repo:etiket`
+
+- Docker hubdan gelen image'ı çalıştır
+- `docker run -p 3000:3000 username/repo:etiket`

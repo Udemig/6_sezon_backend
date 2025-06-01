@@ -1,0 +1,96 @@
+# Docker Compose Configuration
+# Tüm servisleri tek komutla başlatmak için kullanılır
+version: "3.8"
+
+services:
+  # MongoDB Veritabanı Servisi
+  mongodb:
+    image: mongo:7.0
+    container_name: fiverr_mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      # MongoDB root kullanıcısı ve şifresi
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: fiverr_db
+    volumes:
+      # Veri kalıcılığı için volume mount
+      - mongodb_data:/data/db
+      # MongoDB konfigürasyonu için
+      - mongodb_config:/data/configdb
+    networks:
+      - fiverr_network
+
+  # Backend API Servisi
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: fiverr_api
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      # Node.js environment
+      NODE_ENV: development
+      # MongoDB bağlantı URL'i
+      MONGO_URI: mongodb://admin:password123@mongodb:27017/fiverr_db?authSource=admin
+      # JWT Secret (production'da daha güvenli bir değer kullanın)
+      JWT_SECRET: your_jwt_secret_key_here
+      # Cookie Secret
+      COOKIE_SECRET: your_cookie_secret_here
+      # CORS ayarları
+      CLIENT_URL: http://localhost:5173
+      # Cloudinary ayarları (eğer kullanıyorsanız)
+      CLOUDINARY_CLOUD_NAME: ddfkjjnxe
+      CLOUDINARY_API_KEY: 563318394421961
+      CLOUDINARY_API_SECRET: 8zVF7OYoz58jcoJ4Oyf6J3i-c44
+    volumes:
+      # Development için live reload
+      - ./api:/app
+      # node_modules'ü container içinde tutmak için
+      - /app/node_modules
+    depends_on:
+      - mongodb
+    networks:
+      - fiverr_network
+
+  # Frontend Client Servisi
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: fiverr_client
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      # Vite environment variables
+      VITE_API_URL: http://localhost:4000
+      # Development mode
+      NODE_ENV: development
+    volumes:
+      # Development için live reload
+      - ./client:/app
+      # node_modules'ü container içinde tutmak için
+      - /app/node_modules
+    depends_on:
+      - api
+    networks:
+      - fiverr_network
+
+# Volume tanımlamaları
+volumes:
+  # MongoDB veri kalıcılığı için
+  mongodb_data:
+    driver: local
+  mongodb_config:
+    driver: local
+
+# Network tanımlaması
+networks:
+  fiverr_network:
+    driver: bridge
+    # Tüm container'lar bu network üzerinde birbirleriyle iletişim kurabilir
