@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import upload from "../utils/cloudinary.js";
 import c from "../utils/catch-async.js";
 import e from "../utils/error.js";
+import { config, isProduction } from "../config/enviroment.js";
 
 // ----------- Kaydol ---------------- Yeni Hesap Oluştur
 const register = c(async (req: RegisterReq, res: Response, next: NextFunction): Promise<void> => {
@@ -47,15 +48,15 @@ const login = c(async (req: LoginReq, res: Response, next: NextFunction): Promis
   }
 
   // şifreler aynı ise jwt tokeni oluştur
-  const token = jwt.sign({ id: user._id, isSeller: user.isSeller }, process.env.JWT_SECRET as string, {
-    expiresIn: Number(process.env.JWT_EXPIRES),
+  const token = jwt.sign({ id: user._id, isSeller: user.isSeller }, config.JWT_SECRET, {
+    expiresIn: config.JWT_EXPIRES,
   });
 
   // token'ı ve diğer bilgieri client'a gönder
   res
     .cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: isProduction ? true : false,
       sameSite: "lax",
       expires: new Date(Date.now() + 14 * 24 * 3600 * 1000),
     })

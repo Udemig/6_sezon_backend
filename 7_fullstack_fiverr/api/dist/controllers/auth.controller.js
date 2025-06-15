@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import upload from "../utils/cloudinary.js";
 import c from "../utils/catch-async.js";
 import e from "../utils/error.js";
+import { config, isProduction } from "../config/enviroment.js";
 // ----------- Kaydol ---------------- Yeni Hesap Oluştur
 const register = c(async (req, res, next) => {
     // şifreyi saltla ve hashla
@@ -36,14 +37,14 @@ const login = c(async (req, res, next) => {
         return next(e(404, "Giriş bilgileriniz yanlış"));
     }
     // şifreler aynı ise jwt tokeni oluştur
-    const token = jwt.sign({ id: user._id, isSeller: user.isSeller }, process.env.JWT_SECRET, {
-        expiresIn: Number(process.env.JWT_EXPIRES),
+    const token = jwt.sign({ id: user._id, isSeller: user.isSeller }, config.JWT_SECRET, {
+        expiresIn: config.JWT_EXPIRES,
     });
     // token'ı ve diğer bilgieri client'a gönder
     res
         .cookie("token", token, {
         httpOnly: true,
-        secure: false,
+        secure: isProduction ? true : false,
         sameSite: "lax",
         expires: new Date(Date.now() + 14 * 24 * 3600 * 1000),
     })

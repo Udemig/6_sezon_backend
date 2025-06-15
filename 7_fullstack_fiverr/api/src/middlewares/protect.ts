@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import e from "../utils/error.js";
+import { config } from "../config/enviroment.js";
 
 // Cookie ile gelen JWT Token'ı üzerinden kullanıcının kimiliğini doğrulayacak mw
 const protect = (req: Request, res: Response, next: NextFunction): void => {
@@ -13,7 +14,7 @@ const protect = (req: Request, res: Response, next: NextFunction): void => {
   }
 
   //3) token varsa: geçerli mi kontrol et
-  jwt.verify(token, process.env.JWT_SECRET as string, (err: any, payload: any) => {
+  jwt.verify(token, config.JWT_SECRET as string, (err: any, payload: any) => {
     // 4) token geçersiz ise: hata ver
     if (err) {
       return next(e(403, "Tokenınız geçersiz veya süresi dolmuş"));
