@@ -21,3 +21,98 @@
 - Önizlemeli Route
 - Bir sayfaya yönlendiren linkte tıkladığımızda öncelikle bir modal açıp sayfa detaylarını modal üzerinden gösteririz. Kullanıcı sayfayı yenilerse bu sefer modal sayfanın kendisi gösterilir.
 - Bu özellik genel olarak ürün/göndeir detay sayflarında, login/register sayfaların, form alanlarında karşımıza çıkar.
+
+# Server Side Render vs Client Side Render
+
+- Client side rendering yöntemi uygulanan bir sayfayaya girdiğimizde `js kodu` ve `boş html dosyası` indiririz. İndilern js kodu `kullanıcının cihazınıda` çalışır ve html'i doldurur ardından sayfa ekrana gelir
+
+- Server side rendering yöntemi uygulanan bir sayfaya girdiğimizde `js kodu` `sunucuda` çalışır ve `html` `sunucuda` oluşur. Oluşan `dolu html dosyasını` client indirir ve sayfa ekrana gelir
+
+## SSR Faydaları
+
+- JS kodu kullanıcnın cihazında değilde sunucuda çalışıyor olması daha hızlı sonç üretir, daha kısa sayfa yüklenme süreleri oluşur.
+- SEO açısından dolu html dosyasını indirmek önemlidir, bu sayede google'ın robotları sayfa içeriğini boş zannedip arama sonuölarında alt sıralarda önermez
+
+## Nasıl SSR veya CSR kullanırız?
+
+- Next.js'de iki farklı component türü vardır:
+- Server Component: İçeriğini server'da render eder.
+- Client Component: İçeriğni client'da render eder.
+
+- Next.js biz aksini belirtmedikçe oluşturuğumuz bütün componentlar `server component` olarak tanımlanır.
+- Eğer bileşenin üst kısmına `use client` yazarsak `client component` olur.
+- Next.js bizden olabildiğince çok server component kullanmamızı bekler ()(HIZ - SEO)
+- Her component'ı server component yapamıyoruz. Kullanıcı etkileşimi gerektiren (onClick,onSubmit) ve react hooks kullanılan (useState,useEffect) durumlarda client component'lar kullanılır
+
+- Not: Next.js bizden olabildiğince çok server component kullanmamızı istediği için bir sayfa içeriisnde kullanıcı etkileşmi / hook kullanımı gerektiren bi yer varsa o sayfayı client component'a çevirmek yerine sayfanın sadece o kısmı için ayrı bir component açarız o component'I client'a çevirirz bu sayede sayfanın geri kalanı server'da render edilir.
+
+# Data Fetching
+
+- Next.js çekilen veriyi belirli bir süre boyunca cache'de tutuar ve veriyi çeken fonksiyonu belirli bir süre içerisinde tekrar çalıştırıdğımızda api'dan veriyi tekrar almak yerine önceki istekden gelen ve cache'de tutulan veriyi alır
+
+- Bu sayede:
+- - api'dan cevap beklemek gerekmez > daha hızlı
+- - api'a gereksiz istekler gitmez > daha az maliyeti
+
+- Hem bu cache özelliği sayesinde hemde server componentların yoğunlukta olmasını istememiziden dolayı next.js projelerinde context/redux gibi yapıları pek tercih etmeyiz
+
+# Next.js Methodları
+
+## useRouter
+
+- sadece `client` component'larda kullanılır
+- proje içerisinde yönlendirme yapmak için kullanılır.
+- back() | forward() | refresh() | push() methodları vardır.
+
+## redirect
+
+- sadece `server` component'larda kullanılır
+- yönlendirme yapmak için kullanılır
+
+## notFound
+
+- Hem `client` hem de `server` component'larda kullanılır
+- 404 sayfasını ekrana basar
+
+## usePathname
+
+- sadece `client` component'larda kullanılır
+- kullanıcının bulunduğu yolu url'den alır ve döndürür
+
+## useParams
+
+- sadece `client` component'larda kullanılır
+- urldeki path parametreline erişmemizi sağlar
+
+## useSearchParams
+
+- sadece `client` component'larda kullanılır
+- urldeki query parametreline erişmemizi sağlar
+
+## Form
+
+- Kulanıncın arattığı kelimyi url'e parametre olarak ekler aynı zamanda kullanıcyı /search sayfasına yönlendirmek istiyoruz
+
+# Static Site Generation
+
+- SSG, nextjs'in build (derleme) sırasında sayfaları önceden HTML olarak üretip sunucu saklamasısıdır.
+- Kullanıcı siteyi ziyaret ettiğinde sayfalar anında ve çok hızlı şekilde sunulu çünkü sayfa önceden hazırlanmaştır
+
+## Static Sayfa
+
+- Build anında html'i hazırlanan sabit sayfalar
+- Sayfa içeriğinin çok sık değişiceği durumlarda statik sayfa özelliğnii özelleştirmek istebiliriz bunun için component içerinde `revalidate` özelliğini kullanırızı
+
+## Dinamik Sayfa
+
+- Kullanıcının sayfaya girdiği anda hazırlanan dinamik sayfalar
+- Genelde url'de parametresi olan ve sayfa içierğini urldeki parametreye göre değiştiği sayfalar dinamik sayfa kategorisine girer
+
+## generateStaticParams
+
+- Bu fonksiyon sayesinde dinamik olan sayfaları statik hale getirebiliyoruz
+- Buil sırasında çağrılan dinamik route'lar içn bir parametre listesi döndürür. Next.js'de bu listediki herbir parmaetre için o detay sayfasının statik bir berisyonunu oluşturur
+
+- generateStaticParams() > [{id:1},{id:2},{id:3}]
+- yukarıdaki dizideki herbir id değeri içib statik bir detay sayfası oluşur
+- /1 , /2 ,/3 adreslerine giden kullanıclarönceden hazırlanmış sataik içerikleri görür

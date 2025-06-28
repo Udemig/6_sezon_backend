@@ -23,6 +23,13 @@
   .btn {
     @apply size-10 border border-zinc-600 rounded-md transition hover:bg-black/10 cursor-pointer;
   }
+
+  .server {
+    @apply bg-blue-500 text-white text-sm p-2 rounded-md font-bold;
+  }
+  .client {
+    @apply bg-red-500 text-white text-sm p-2 rounded-md font-bold;
+  }
 }
 
 body {
