@@ -1,14 +1,13 @@
+"use client";
 import { notFound, redirect } from "next/navigation";
-
-const handleAction = async () => {
-  "use server"; // server action olarka ifade etmemizi sağlar
-
-  // inputlardaki veirlere eriş..
-
-  // api'a istek at...
-};
+import { useActionState } from "react";
+import handleAction from "@/utils/server";
 
 const Page = () => {
+  // useActionState: sadece client componetlarda kullanılır
+  // çalıştırılan aksiyonun state'ini takip etmeye yarar
+  const [state, formAction, pending] = useActionState(handleAction, null);
+
   if ("eğer kullanıcı admin değilse") {
     // redirect("/");
     // notFound();
@@ -26,11 +25,13 @@ const Page = () => {
 
       <hr />
 
-      <form action={handleAction} className="flex flex-col gap-4 my-10">
-        <input type="text" placeholder="isim" className="flex-1 border rounded p-2" />
-        <input type="text" placeholder="şifre" className="flex-1 border rounded p-2" />
+      <form action={formAction} className="flex flex-col gap-4 my-10">
+        <input name="email" type="text" placeholder="isim" className="flex-1 border rounded p-2" />
+        <input name="password" type="text" placeholder="şifre" className="flex-1 border rounded p-2" />
 
-        <button className="border rounded p-2 mt-2">Gönder</button>
+        <button disabled={pending} className="border rounded p-2 mt-2">
+          Gönder
+        </button>
       </form>
     </div>
   );

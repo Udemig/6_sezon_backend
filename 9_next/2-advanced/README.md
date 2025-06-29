@@ -116,3 +116,32 @@
 - generateStaticParams() > [{id:1},{id:2},{id:3}]
 - yukarıdaki dizideki herbir id değeri içib statik bir detay sayfası oluşur
 - /1 , /2 ,/3 adreslerine giden kullanıclarönceden hazırlanmış sataik içerikleri görür
+
+# Fullstack Proje
+
+- Next.js bize hem frontend hemde backend kodlarını tek bir proje içerisinde yazmayı vaad ediyor.
+- Next.js api oluştutururken klasik nodejs,express api'lardan farklı, next.js'e has routing yöntemi kullanrırız
+
+- Backend routelarını oluşturmak için `app` klasörü içerisinde `api` klasörü oluştururuz
+- Oluşturmak istediğimiz her endpoint için yeni bir klasör ve o klasör içerisinde `route.js` dosyası oluştururuz
+- Oluşturduğumuz route içerisinde cevap vermek istediğimiz HTTP methodunun ismiyle bir fonksiyon oluştururuz
+
+# Res.Json() vs NextResponse.json()
+
+- NEXT.JS'de client'a cevap gönderirken eski res yönremi yerine nextresponse yöntemini tercih ederiz bunun sebebi:
+- Typescript desteği
+- Büyük veriler için streaming desteği sunar
+
+# Middleware
+
+- `middleware.js` dosyasını src varsa src klasörü içerisine yoksa app klasörünün hemn dışarısına oluşturururz
+- İçerisinde bir ana middleware fonksiyonu export ederiz
+- Config aracılığıyla middleware'in hangi endpointelerde çalışıcağınız belirleriz
+- Belirlideğim endpointelere her istek deldiğinde mw devreye girer
+- MW'in sonraki aşamaya geçmesi için NextResponse.next() kullanırız
+
+# Server Actions
+
+- Sunucu tarafında çalışan normalde frontend'in yapamayacığı backend'e doğrudan erişme gibi eylemleri gerçekleştirebileceğimiz fonksiyonlar
+
+- server action fonksiyonları mutlaka `use server`ile işaretlenmeli
