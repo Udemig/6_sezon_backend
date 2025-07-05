@@ -13,7 +13,7 @@ export const navigationItems = [
   },
   {
     label: "Yeni Ticket",
-    href: "/tickets/add",
+    href: "/ticket/add",
     icon: Plus,
   },
   {

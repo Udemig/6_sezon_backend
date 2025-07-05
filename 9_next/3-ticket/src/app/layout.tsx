@@ -40,10 +40,10 @@ export default function RootLayout({
         <div className="flex h-full">
           <Sidebar />
 
-          <div className="min-h-screen p-4 md:px-8 pb-10">
+          <div className="min-h-screen w-full">
             <Header />
 
-            <div className="h-full overflow-y-auto">{children}</div>
+            <div className="h-full overflow-y-auto p-4 md:px-8 pb-10">{children}</div>
           </div>
         </div>
       </body>
