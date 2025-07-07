@@ -24,13 +24,17 @@ export type Statistics = {
   averagePriority: number;
 };
 
+export type TicketCategory = "Yazılım Sorunu" | "Donanım Sorunu" | "Bağlantı Sorunu" | "Diğer";
+
+export type TicketStatus = "Devam Ediyor" | "Beklemede" | "Çözüldü";
+
 export type Ticket = {
   title: string;
   description: string;
-  category: "Yazılım Sorunu" | "Donanım Sorunu" | "Bağlantı Sorunu" | "Diğer";
+  category: TicketCategory;
   priority: number;
   progress: number;
-  status: "Devam Ediyor" | "Beklemede" | "Çözüldü";
+  status: TicketStatus;
   createdAt: string;
   updatedAt: string;
   id: string;

@@ -43,7 +43,7 @@ export default function RootLayout({
           <div className="min-h-screen w-full">
             <Header />
 
-            <div className="h-full overflow-y-auto p-4 md:px-8 pb-10">{children}</div>
+            <main className="h-[calc(100vh-189px)] overflow-y-auto p-4 md:px-8 pb-10">{children}</main>
           </div>
         </div>
       </body>
