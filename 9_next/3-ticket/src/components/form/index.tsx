@@ -66,7 +66,7 @@ const Form: FC<Props> = ({ isEditMode, editItem }) => {
           </div>
         </Fieldset>
 
-        <Fieldset label={`İlerleme: ${editItem?.progress}%`}>
+        <Fieldset label={`İlerleme`}>
           <input type="range" name="progress" min={0} max={100} step={5} defaultValue={editItem?.progress || 0} />
         </Fieldset>
 
