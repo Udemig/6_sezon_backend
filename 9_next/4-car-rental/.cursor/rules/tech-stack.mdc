@@ -1,0 +1,42 @@
+---
+alwaysApply: true
+---
+
+### Technologies Rules for Project
+
+1. **Framework & Routing**
+
+   - Use **Next.js 15** with the **App Router**.
+   - All pages belong in `app/`, and route handlers (API endpoints) in `app/api/*/route.ts`.
+
+2. **Styling**
+
+   - Use **Tailwind CSS** exclusively.
+   - Never include inline styles or external CSS files.
+   - Follow a mobile‑first approach and use Tailwind’s dark‑mode class strategy.
+
+3. **Icons**
+
+   - Import icons only from **lucide‑react**, e.g.
+
+     ```tsx
+     import { ShoppingCart } from "lucide-react";
+     ```
+
+4. **Payments**
+
+   - Integrate **Stripe** with the official `@stripe/stripe-js` and `@stripe/next-js` (if required).
+   - Keep secret keys in `.env.local`; expose only the publishable key on the client.
+   - Use Stripe’s Checkout Session for one‑time purchases unless otherwise specified.
+
+5. **Database**
+
+   - Use **MongoDB** with **Mongoose** for data modeling.
+   - Define all schemas in `lib/models/`.
+   - Create a single reusable `connectMongo()` utility that caches the connection in dev.
+
+6. **TypeScript & Linting**
+
+   - All files must be **TypeScript** (`.ts`/`.tsx`).
+   - Keep `strict: true` in `tsconfig.json`.
+   - Follow ESLint with the Next.js & Tailwind plugins; fix all lint errors before committing.
