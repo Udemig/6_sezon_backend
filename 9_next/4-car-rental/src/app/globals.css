@@ -19,6 +19,23 @@
   }
 }
 
+@layer base {
+  input,
+  select {
+    @apply text-zinc-800;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    @apply text-zinc-800;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

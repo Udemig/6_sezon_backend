@@ -1,20 +1,5 @@
 import mongoose from "mongoose";
-
-export interface IBooking extends mongoose.Document {
-  userId: mongoose.Types.ObjectId;
-  carId: mongoose.Types.ObjectId;
-  startDate: Date;
-  endDate: Date;
-  totalPrice: number;
-  status: "pending" | "confirmed" | "cancelled" | "completed";
-  paymentIntentId?: string;
-  stripeSessionId?: string;
-  pickupLocation: string;
-  dropoffLocation: string;
-  notes?: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { IBooking } from "@/types";
 
 const bookingSchema = new mongoose.Schema(
   {

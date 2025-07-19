@@ -4,22 +4,7 @@ import { useState } from "react";
 import { Star, MessageCircle, ThumbsUp, User } from "lucide-react";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { formatDate } from "@/lib/utils";
-
-interface Review {
-  _id: string;
-  userId: {
-    firstName: string;
-    lastName: string;
-  };
-  rating: number;
-  comment: string;
-  createdAt: string;
-}
-
-interface ReviewSectionProps {
-  reviews: Review[];
-  carId: string;
-}
+import { Review, ReviewSectionProps } from "@/types";
 
 export default function ReviewSection({ reviews, carId }: ReviewSectionProps) {
   const { user, isAuthenticated } = useAuth();

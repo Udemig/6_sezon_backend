@@ -2,21 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
-
-interface FilterState {
-  type: string;
-  location: string;
-  minPrice: string;
-  maxPrice: string;
-  transmission: string;
-  fuelType: string;
-  seats: string;
-}
-
-interface CarFiltersProps {
-  filters: FilterState;
-  onFilterChange: (filters: FilterState) => void;
-}
+import { FilterState, CarFiltersProps } from "@/types";
 
 export default function CarFilters({
   filters,

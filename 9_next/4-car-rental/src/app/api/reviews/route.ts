@@ -4,7 +4,7 @@ import connectMongo from "@/lib/mongodb";
 import Review from "@/lib/models/Review";
 import Car from "@/lib/models/Car";
 import Booking from "@/lib/models/Booking";
-import { requireAuth } from "@/lib/middleware/auth";
+import { getCurrentUser } from "@/lib/auth-utils";
 
 const reviewSchema = z.object({
   carId: z.string().min(1, "Car ID is required"),
@@ -18,9 +18,9 @@ const reviewSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
-    const user = await requireAuth(request);
-    if (user instanceof NextResponse) {
-      return user;
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const body = await request.json();

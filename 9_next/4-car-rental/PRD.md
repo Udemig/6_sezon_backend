@@ -8,7 +8,7 @@ payments via Stripe, and provide or browse authentic reviews. The site
 is built with Next.js, MongoDB, Stripe, and aligns with a specific Figma
 design—styled using Tailwind CSS.
 
-------------------------------------------------------------------------
+---
 
 ## Goals
 
@@ -51,7 +51,7 @@ design—styled using Tailwind CSS.
 
 - No mobile app at launch—focus is web only.
 
-------------------------------------------------------------------------
+---
 
 ## User Stories
 
@@ -98,7 +98,7 @@ design—styled using Tailwind CSS.
 - As an admin, I want to approve, hide, or remove user reviews, so that
   quality is maintained.
 
-------------------------------------------------------------------------
+---
 
 ## Functional Requirements
 
@@ -119,8 +119,11 @@ design—styled using Tailwind CSS.
 
 - **User Authentication** (High)
 
-  - Email-based signup/login, password reset, persistent sessions,
-    role-based access (user/admin).
+  - NextAuth.js-based authentication with dedicated login/register pages
+  - Email-based signup/login with credentials provider
+  - Password reset, persistent sessions, role-based access (user/admin)
+  - Session-based redirection and form validation
+  - OAuth strategies support (future expansion)
 
 - **Reviews System** (Medium)
 
@@ -137,7 +140,7 @@ design—styled using Tailwind CSS.
 
   - Responsive layouts, accessibility standards, dark mode support.
 
-------------------------------------------------------------------------
+---
 
 ## User Experience
 
@@ -229,7 +232,7 @@ design—styled using Tailwind CSS.
 
 - Friendly, concise in-app messages and tooltips.
 
-------------------------------------------------------------------------
+---
 
 ## Narrative
 
@@ -258,7 +261,7 @@ to the one-off tourist, feels in control. For Mia, the experience is
 frictionless; for the business, it’s a measurable win in both efficiency
 and customer loyalty.
 
-------------------------------------------------------------------------
+---
 
 ## Success Metrics
 
@@ -297,7 +300,7 @@ and customer loyalty.
 - Monitor: payment failures, booking cancellations, admin interventions,
   user feedback scores.
 
-------------------------------------------------------------------------
+---
 
 ## Technical Considerations
 
@@ -356,7 +359,7 @@ and customer loyalty.
 
 - Maintaining Figma design consistency as components grow.
 
-------------------------------------------------------------------------
+---
 
 ## Milestones & Sequencing
 
@@ -404,4 +407,4 @@ and customer loyalty.
 
 - Dependencies: Core and admin features complete.
 
-------------------------------------------------------------------------
+---

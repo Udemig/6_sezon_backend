@@ -6,18 +6,7 @@ import { Calendar, MapPin, Clock, CreditCard } from "lucide-react";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { formatPrice } from "@/lib/utils";
 import { addDays, differenceInDays } from "date-fns";
-
-interface Car {
-  _id: string;
-  make: string;
-  modelName: string;
-  pricePerDay: number;
-  location: string;
-}
-
-interface BookingFormProps {
-  car: Car;
-}
+import { Car, BookingFormProps } from "@/types";
 
 export default function BookingForm({ car }: BookingFormProps) {
   const router = useRouter();
@@ -88,7 +77,7 @@ export default function BookingForm({ car }: BookingFormProps) {
     setError(null);
 
     try {
-      const response = await fetch("/api/bookings", {
+      const response = await fetch("/api/checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -109,10 +98,12 @@ export default function BookingForm({ car }: BookingFormProps) {
         throw new Error(errorData.error || "Failed to create booking");
       }
 
-      const booking = await response.json();
+      const booking: {
+        message: string;
+        url: string;
+      } = await response.json();
 
-      // Redirect to payment page
-      router.push(`/booking/payment/${booking.booking._id}`);
+      window.location.href = booking.url;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create booking");
     } finally {
@@ -282,15 +273,15 @@ export default function BookingForm({ car }: BookingFormProps) {
           <div className="border-t pt-4">
             <h4 className="font-semibold mb-3">Price Breakdown</h4>
             <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
+              <div className="flex justify-between text-gray-500">
                 <span>Rental ({priceCalculation.days} days)</span>
                 <span>{formatPrice(priceCalculation.subtotal)}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between text-gray-500">
                 <span>Tax</span>
                 <span>{formatPrice(priceCalculation.tax)}</span>
               </div>
-              <div className="border-t pt-2 flex justify-between font-semibold">
+              <div className="border-t pt-2 flex justify-between font-semibold text-gray-500">
                 <span>Total</span>
                 <span className="text-blue-600">
                   {formatPrice(priceCalculation.total)}

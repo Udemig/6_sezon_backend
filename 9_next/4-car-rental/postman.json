@@ -1,0 +1,487 @@
+{
+  "info": {
+    "_postman_id": "car-rental-api-collection",
+    "name": "Car Rental API",
+    "description": "Complete API collection for testing the car rental Next.js application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"phone\": \"+1234567890\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/auth/register",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "auth", "register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NextAuth Session",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/auth/session",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "auth", "session"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NextAuth Providers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/auth/providers",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "auth", "providers"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NextAuth CSRF Token",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/auth/csrf",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "auth", "csrf"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NextAuth SignIn (Credentials)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "john.doe@example.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "password123",
+                  "type": "text"
+                },
+                {
+                  "key": "csrfToken",
+                  "value": "{{CSRF_TOKEN}}",
+                  "type": "text"
+                },
+                {
+                  "key": "callbackUrl",
+                  "value": "{{BASE_URL}}",
+                  "type": "text"
+                },
+                {
+                  "key": "json",
+                  "value": "true",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/auth/signin/credentials",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "auth", "signin", "credentials"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NextAuth SignOut",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "csrfToken",
+                  "value": "{{CSRF_TOKEN}}",
+                  "type": "text"
+                },
+                {
+                  "key": "callbackUrl",
+                  "value": "{{BASE_URL}}",
+                  "type": "text"
+                },
+                {
+                  "key": "json",
+                  "value": "true",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/auth/signout",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "auth", "signout"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cars",
+      "item": [
+        {
+          "name": "Get All Cars",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/cars",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "cars"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Cars with Filters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/cars?search=tesla&type=sedan&minPrice=50&maxPrice=200&transmission=automatic&fuelType=electric&seats=5&limit=10&page=1&sortBy=pricePerDay&sortOrder=asc",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "cars"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "tesla"
+                },
+                {
+                  "key": "type",
+                  "value": "sedan"
+                },
+                {
+                  "key": "minPrice",
+                  "value": "50"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "200"
+                },
+                {
+                  "key": "transmission",
+                  "value": "automatic"
+                },
+                {
+                  "key": "fuelType",
+                  "value": "electric"
+                },
+                {
+                  "key": "seats",
+                  "value": "5"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "pricePerDay"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "asc"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Car",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"make\": \"Tesla\",\n  \"modelName\": \"Model 3\",\n  \"year\": 2023,\n  \"type\": \"sedan\",\n  \"transmission\": \"automatic\",\n  \"fuelType\": \"electric\",\n  \"seats\": 5,\n  \"doors\": 4,\n  \"pricePerDay\": 150,\n  \"images\": [\n    \"https://example.com/tesla-model3-1.jpg\",\n    \"https://example.com/tesla-model3-2.jpg\"\n  ],\n  \"description\": \"Premium electric sedan with autopilot features and cutting-edge technology.\",\n  \"features\": [\n    \"Autopilot\",\n    \"Supercharging\",\n    \"Premium Audio\",\n    \"Glass Roof\"\n  ],\n  \"location\": \"San Francisco, CA\",\n  \"mileage\": 15000,\n  \"color\": \"Pearl White\",\n  \"licensePlate\": \"TESLA123\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/cars",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "cars"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Car by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/cars/{{CAR_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "cars", "{{CAR_ID}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Car",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pricePerDay\": 175,\n  \"description\": \"Updated description for the premium electric sedan.\",\n  \"isAvailable\": true\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/cars/{{CAR_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "cars", "{{CAR_ID}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Car",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/cars/{{CAR_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "cars", "{{CAR_ID}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Create Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "{{NEXT_AUTH_COOKIE}}",
+                "description": "NextAuth session cookie"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"carId\": \"{{CAR_ID}}\",\n  \"bookingId\": \"{{BOOKING_ID}}\",\n  \"rating\": 5,\n  \"comment\": \"Excellent car! Great driving experience and very clean. Highly recommend this Tesla Model 3.\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/reviews",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "reviews"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/reviews",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "reviews"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Reviews for Car",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/reviews?carId={{CAR_ID}}&limit=5&page=1",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "reviews"],
+              "query": [
+                {
+                  "key": "carId",
+                  "value": "{{CAR_ID}}"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Checkout",
+      "item": [
+        {
+          "name": "Process Checkout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "{{NEXT_AUTH_COOKIE}}",
+                "description": "NextAuth session cookie"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"carId\": \"{{CAR_ID}}\",\n  \"startDate\": \"2024-02-01\",\n  \"endDate\": \"2024-02-05\",\n  \"totalAmount\": 600,\n  \"paymentMethod\": \"card\",\n  \"pickupLocation\": \"San Francisco Airport\",\n  \"dropoffLocation\": \"San Francisco Airport\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/checkout",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "checkout"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Database",
+      "item": [
+        {
+          "name": "Seed Database",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/seed",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "seed"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Seed Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/seed",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "seed"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "CAR_ID",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "BOOKING_ID",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "NEXT_AUTH_COOKIE",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "CSRF_TOKEN",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

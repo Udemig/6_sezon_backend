@@ -1,13 +1,18 @@
 import Link from "next/link";
+import { generateCarImageUrl } from "@/lib/utils";
 
 export default function Hero() {
+  // Sample car data for hero images
+  const sportsCar = { make: "nissan", modelName: "gt-r", year: 2024 };
+  const luxuryCar = { make: "audi", modelName: "a8", year: 2024 };
+
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="grid md:grid-cols-2 gap-8">
         {/* Left Banner */}
         <div className="bg-gradient-to-r from-blue-400 to-blue-600 rounded-lg p-8 text-white relative overflow-hidden">
           <div className="relative z-10">
-            <h2 className="text-3xl font-bold mb-4">
+            <h2 className="text-3xl font-bold mb-4 text-zinc-100">
               The Best Platform
               <br />
               for Car Rental
@@ -25,20 +30,19 @@ export default function Hero() {
           </div>
 
           {/* Car Image */}
-          <div className="absolute right-0 bottom-0 transform translate-x-4 translate-y-4">
-            <div className="w-80 h-32 bg-white/20 rounded-lg flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-20 h-12 bg-white/30 rounded mx-auto mb-2"></div>
-                <p className="text-xs text-blue-100">Sports Car</p>
-              </div>
-            </div>
+          <div className="absolute right-5 bottom-5 transform translate-x-4 translate-y-4">
+            <img
+              src={generateCarImageUrl(sportsCar, "05")}
+              alt="Sports Car"
+              className="w-80 h-32 object-cover rounded-lg opacity-80"
+            />
           </div>
         </div>
 
         {/* Right Banner */}
         <div className="bg-gradient-to-r from-blue-500 to-blue-700 rounded-lg p-8 text-white relative overflow-hidden">
           <div className="relative z-10">
-            <h2 className="text-3xl font-bold mb-4">
+            <h2 className="text-3xl font-bold mb-4 text-zinc-100">
               Easy way to rent
               <br />a car at a low price
             </h2>
@@ -55,13 +59,12 @@ export default function Hero() {
           </div>
 
           {/* Car Image */}
-          <div className="absolute right-0 bottom-0 transform translate-x-4 translate-y-4">
-            <div className="w-80 h-32 bg-white/20 rounded-lg flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-20 h-12 bg-white/30 rounded mx-auto mb-2"></div>
-                <p className="text-xs text-blue-100">Nissan GT-R</p>
-              </div>
-            </div>
+          <div className="absolute right-5 bottom-5 transform translate-x-4 translate-y-4">
+            <img
+              src={generateCarImageUrl(luxuryCar, "05")}
+              alt="Nissan GT-R"
+              className="w-80 h-32 object-cover rounded-lg opacity-80"
+            />
           </div>
         </div>
       </div>

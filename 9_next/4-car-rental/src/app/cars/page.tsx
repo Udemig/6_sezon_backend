@@ -9,40 +9,10 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+
 import CarCard from "@/components/CarCard";
 import CarFilters from "@/components/CarFilters";
-
-interface Car {
-  _id: string;
-  make: string;
-  modelName: string;
-  year: number;
-  type: string;
-  transmission: string;
-  fuelType: string;
-  seats: number;
-  doors: number;
-  pricePerDay: number;
-  images: string[];
-  description: string;
-  features: string[];
-  location: string;
-  averageRating: number;
-  totalReviews: number;
-  mileage: number;
-  color: string;
-}
-
-interface Pagination {
-  page: number;
-  limit: number;
-  totalPages: number;
-  totalCars: number;
-  hasNextPage: boolean;
-  hasPrevPage: boolean;
-}
+import { Car, Pagination } from "@/types";
 
 export default function CarsPage() {
   const [cars, setCars] = useState<Car[]>([]);
@@ -129,178 +99,152 @@ export default function CarsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Filters Sidebar */}
+        <div className={`lg:w-64 ${showFilters ? "block" : "hidden lg:block"}`}>
+          <CarFilters filters={filters} onFilterChange={handleFilterChange} />
+        </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filters Sidebar */}
-          <div
-            className={`lg:w-64 ${showFilters ? "block" : "hidden lg:block"}`}
-          >
-            <CarFilters filters={filters} onFilterChange={handleFilterChange} />
-          </div>
+        {/* Main Content */}
+        <div className="flex-1">
+          {/* Search and Filter Controls */}
+          <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+              {/* Search Bar */}
+              <form onSubmit={handleSearch} className="flex-1 max-w-md">
+                <div className="relative">
+                  <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Search cars..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+              </form>
 
-          {/* Main Content */}
-          <div className="flex-1">
-            {/* Search and Controls */}
-            <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
-              <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-                {/* Search */}
-                <form onSubmit={handleSearch} className="flex-1 max-w-md">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <input
-                      type="text"
-                      placeholder="Search cars..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                </form>
+              {/* Controls */}
+              <div className="flex items-center space-x-4">
+                {/* Mobile Filter Toggle */}
+                <button
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="lg:hidden flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                  <Filter className="h-4 w-4" />
+                  <span>Filters</span>
+                </button>
 
-                {/* Controls */}
-                <div className="flex items-center gap-4">
-                  {/* Filter Toggle (Mobile) */}
+                {/* View Toggle */}
+                <div className="flex items-center space-x-2">
                   <button
-                    onClick={() => setShowFilters(!showFilters)}
-                    className="lg:hidden flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+                    onClick={() => setViewMode("grid")}
+                    className={`p-2 rounded-lg ${
+                      viewMode === "grid"
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+                    }`}
                   >
-                    <Filter className="h-4 w-4" />
-                    Filters
+                    <Grid className="h-4 w-4" />
                   </button>
-
-                  {/* Sort */}
-                  <select
-                    value={`${sortBy}-${sortOrder}`}
-                    onChange={(e) => {
-                      const [field, order] = e.target.value.split("-");
-                      setSortBy(field);
-                      setSortOrder(order as "asc" | "desc");
-                    }}
-                    className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  <button
+                    onClick={() => setViewMode("list")}
+                    className={`p-2 rounded-lg ${
+                      viewMode === "list"
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+                    }`}
                   >
-                    <option value="createdAt-desc">Newest First</option>
-                    <option value="createdAt-asc">Oldest First</option>
-                    <option value="pricePerDay-asc">Price: Low to High</option>
-                    <option value="pricePerDay-desc">Price: High to Low</option>
-                    <option value="averageRating-desc">
-                      Rating: High to Low
-                    </option>
-                  </select>
-
-                  {/* View Mode */}
-                  <div className="flex border border-gray-300 rounded-lg">
-                    <button
-                      onClick={() => setViewMode("grid")}
-                      className={`p-2 ${
-                        viewMode === "grid"
-                          ? "bg-blue-500 text-white"
-                          : "text-gray-600"
-                      }`}
-                    >
-                      <Grid className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={() => setViewMode("list")}
-                      className={`p-2 ${
-                        viewMode === "list"
-                          ? "bg-blue-500 text-white"
-                          : "text-gray-600"
-                      }`}
-                    >
-                      <List className="h-4 w-4" />
-                    </button>
-                  </div>
+                    <List className="h-4 w-4" />
+                  </button>
                 </div>
               </div>
             </div>
-
-            {/* Results */}
-            {loading ? (
-              <div className="text-center py-12">
-                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-                <p className="mt-2 text-gray-600">Loading cars...</p>
-              </div>
-            ) : error ? (
-              <div className="text-center py-12">
-                <p className="text-red-600">{error}</p>
-              </div>
-            ) : (
-              <>
-                {/* Cars Grid */}
-                <div
-                  className={`${
-                    viewMode === "grid"
-                      ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-                      : "space-y-6"
-                  }`}
-                >
-                  {cars.map((car) => (
-                    <CarCard key={car._id} car={car} viewMode={viewMode} />
-                  ))}
-                </div>
-
-                {/* Pagination */}
-                {pagination && pagination.totalPages > 1 && (
-                  <div className="mt-8 flex items-center justify-between">
-                    <div className="text-sm text-gray-600">
-                      Showing {(pagination.page - 1) * pagination.limit + 1} to{" "}
-                      {Math.min(
-                        pagination.page * pagination.limit,
-                        pagination.totalCars
-                      )}{" "}
-                      of {pagination.totalCars} results
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => handlePageChange(pagination.page - 1)}
-                        disabled={!pagination.hasPrevPage}
-                        className="flex items-center gap-1 px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        <ChevronLeft className="h-4 w-4" />
-                        Previous
-                      </button>
-
-                      <div className="flex items-center gap-1">
-                        {Array.from(
-                          { length: pagination.totalPages },
-                          (_, i) => i + 1
-                        ).map((page) => (
-                          <button
-                            key={page}
-                            onClick={() => handlePageChange(page)}
-                            className={`px-3 py-2 rounded-lg ${
-                              page === pagination.page
-                                ? "bg-blue-500 text-white"
-                                : "hover:bg-gray-100"
-                            }`}
-                          >
-                            {page}
-                          </button>
-                        ))}
-                      </div>
-
-                      <button
-                        onClick={() => handlePageChange(pagination.page + 1)}
-                        disabled={!pagination.hasNextPage}
-                        className="flex items-center gap-1 px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        Next
-                        <ChevronRight className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
           </div>
+
+          {/* Loading State */}
+          {loading && (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            </div>
+          )}
+
+          {/* Error State */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+              <p className="text-red-800">{error}</p>
+            </div>
+          )}
+
+          {/* Cars Grid/List */}
+          {!loading && !error && (
+            <>
+              <div
+                className={
+                  viewMode === "grid"
+                    ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+                    : "space-y-4"
+                }
+              >
+                {cars.map((car) => (
+                  <CarCard key={car._id} car={car} viewMode={viewMode} />
+                ))}
+              </div>
+
+              {/* Empty State */}
+              {cars.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-gray-500 text-lg">
+                    No cars found matching your criteria.
+                  </p>
+                  <p className="text-gray-400 mt-2">
+                    Try adjusting your search or filters.
+                  </p>
+                </div>
+              )}
+
+              {/* Pagination */}
+              {pagination && pagination.totalPages > 1 && (
+                <div className="flex justify-center items-center space-x-2 mt-8">
+                  <button
+                    onClick={() => handlePageChange(pagination.page - 1)}
+                    disabled={pagination.page === 1}
+                    className="flex items-center space-x-1 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                    <span>Previous</span>
+                  </button>
+
+                  {/* Page Numbers */}
+                  {Array.from({ length: pagination.totalPages }, (_, i) => (
+                    <button
+                      key={i + 1}
+                      onClick={() => handlePageChange(i + 1)}
+                      className={`px-4 py-2 rounded-lg ${
+                        pagination.page === i + 1
+                          ? "bg-blue-600 text-white"
+                          : "bg-white border border-gray-300 hover:bg-gray-50"
+                      }`}
+                    >
+                      {i + 1}
+                    </button>
+                  ))}
+
+                  <button
+                    onClick={() => handlePageChange(pagination.page + 1)}
+                    disabled={pagination.page === pagination.totalPages}
+                    className="flex items-center space-x-1 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <span>Next</span>
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 }

@@ -33,3 +33,25 @@ export function formatDateTime(date: Date) {
 export function generateId() {
   return Math.random().toString(36).substr(2, 9);
 }
+
+export function generateCarImageUrl(
+  car: { make: string; modelName: string; year: number },
+  angle: number | string = 23
+): string {
+  // Format the model name to be URL-friendly
+  const formatModel = (model: string) =>
+    model.toLowerCase().replace(/\s+/g, "-");
+
+  const baseUrl = "https://cdn.imagin.studio/getImage";
+  const params = new URLSearchParams({
+    customer: "hrjavascript-mastery",
+    make: car.make.toLowerCase(),
+    modelFamily: formatModel(car.modelName),
+    modelRange: formatModel(car.modelName),
+    modelYear: car.year.toString(),
+    angle: angle.toString(),
+    zoomtype: "fullscreen",
+  });
+
+  return `${baseUrl}?${params.toString()}`;
+}

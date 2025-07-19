@@ -2,12 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connectMongo from "@/lib/mongodb";
 import Car from "@/lib/models/Car";
 import Review from "@/lib/models/Review";
-
-interface RouteParams {
-  params: {
-    id: string;
-  };
-}
+import { RouteParams } from "@/types";
 
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {

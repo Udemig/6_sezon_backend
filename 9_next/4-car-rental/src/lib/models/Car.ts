@@ -1,28 +1,5 @@
 import mongoose from "mongoose";
-
-export interface ICar extends mongoose.Document {
-  make: string;
-  modelName: string;
-  year: number;
-  type: "sedan" | "suv" | "hatchback" | "sports" | "luxury";
-  transmission: "manual" | "automatic";
-  fuelType: "gasoline" | "diesel" | "hybrid" | "electric";
-  seats: number;
-  doors: number;
-  pricePerDay: number;
-  images: string[];
-  description: string;
-  features: string[];
-  location: string;
-  isAvailable: boolean;
-  averageRating: number;
-  totalReviews: number;
-  mileage: number;
-  color: string;
-  licensePlate: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { ICar } from "@/types";
 
 const carSchema = new mongoose.Schema(
   {

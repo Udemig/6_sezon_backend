@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import connectMongo from "@/lib/mongodb";
 import Car from "@/lib/models/Car";
+import { CarType, TransmissionType, FuelType } from "@/types";
 
 const querySchema = z.object({
   search: z.string().optional(),

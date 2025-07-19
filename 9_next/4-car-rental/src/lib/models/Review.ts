@@ -1,16 +1,5 @@
 import mongoose from "mongoose";
-
-export interface IReview extends mongoose.Document {
-  userId: mongoose.Types.ObjectId;
-  carId: mongoose.Types.ObjectId;
-  bookingId: mongoose.Types.ObjectId;
-  rating: number;
-  comment: string;
-  isApproved: boolean;
-  isHidden: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { IReview } from "@/types";
 
 const reviewSchema = new mongoose.Schema(
   {
