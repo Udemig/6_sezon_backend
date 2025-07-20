@@ -13,9 +13,9 @@ const reviewSchema = new mongoose.Schema(
       ref: "Car",
       required: true,
     },
-    bookingId: {
+    orderId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Booking",
+      ref: "Order",
       required: true,
     },
     rating: {
@@ -47,10 +47,10 @@ const reviewSchema = new mongoose.Schema(
 // Add indexes for better query performance
 reviewSchema.index({ carId: 1, isApproved: 1, isHidden: 1 });
 reviewSchema.index({ userId: 1, createdAt: -1 });
-reviewSchema.index({ bookingId: 1 });
+reviewSchema.index({ orderId: 1 });
 
-// Ensure one review per booking
-reviewSchema.index({ bookingId: 1 }, { unique: true });
+// Ensure one review per order
+reviewSchema.index({ orderId: 1 }, { unique: true });
 
 const Review =
   mongoose.models.Review || mongoose.model<IReview>("Review", reviewSchema);

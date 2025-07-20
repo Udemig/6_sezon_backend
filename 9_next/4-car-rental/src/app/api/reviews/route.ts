@@ -3,12 +3,12 @@ import { z } from "zod";
 import connectMongo from "@/lib/mongodb";
 import Review from "@/lib/models/Review";
 import Car from "@/lib/models/Car";
-import Booking from "@/lib/models/Booking";
+import { Order } from "@/lib/models/Order";
 import { getCurrentUser } from "@/lib/auth-utils";
 
 const reviewSchema = z.object({
   carId: z.string().min(1, "Car ID is required"),
-  bookingId: z.string().optional(),
+  orderId: z.string().optional(),
   rating: z
     .number()
     .min(1, "Rating must be at least 1")
@@ -34,29 +34,29 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Car not found" }, { status: 404 });
     }
 
-    // Find a completed booking for this user and car
-    const booking = await Booking.findOne({
-      userId: user.id,
-      carId: validatedData.carId,
-      status: "completed",
+    // Find a paid order for this user and car
+    const order = await Order.findOne({
+      user: user.id,
+      product: validatedData.carId,
+      status: "paid",
     }).sort({ createdAt: -1 });
 
-    if (!booking) {
+    if (!order) {
       return NextResponse.json(
         { error: "You can only review cars you have rented" },
         { status: 400 }
       );
     }
 
-    // Check if user has already reviewed this booking
+    // Check if user has already reviewed this order
     const existingReview = await Review.findOne({
       userId: user.id,
-      bookingId: booking._id,
+      orderId: order._id,
     });
 
     if (existingReview) {
       return NextResponse.json(
-        { error: "You have already reviewed this booking" },
+        { error: "You have already reviewed this order" },
         { status: 400 }
       );
     }
@@ -65,9 +65,10 @@ export async function POST(request: NextRequest) {
     const review = new Review({
       userId: user.id,
       carId: validatedData.carId,
-      bookingId: booking._id,
+      orderId: order._id,
       rating: validatedData.rating,
       comment: validatedData.comment,
+      isApproved: true,
     });
 
     await review.save();

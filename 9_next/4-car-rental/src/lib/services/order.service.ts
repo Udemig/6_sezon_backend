@@ -8,20 +8,44 @@ export interface OrdersResponse {
   orders: Order[];
 }
 
-export async function getOrders(): Promise<OrdersResponse> {
+export interface OrderResponse {
+  message?: string;
+  status: string;
+  order: Order;
+}
+
+export async function getOrders(userId: string): Promise<OrdersResponse> {
   try {
-    const response = await fetch(`${BASE_URL}/api/orders`, {
+    const response = await fetch(`${BASE_URL}/api/orders?userId=${userId}`, {
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    const data: OrdersResponse = await response.json();
-
-    return data;
+    return response.json();
   } catch (error) {
     console.error("Error fetching orders:", error);
     throw new Error("Failed to fetch orders");
+  }
+}
+
+export async function getOrderById(orderId: string): Promise<OrderResponse> {
+  try {
+    const response = await fetch(`${BASE_URL}/api/orders/${orderId}`, {
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch order: ${response.status}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching order:", error);
+    throw new Error("Failed to fetch order");
   }
 }

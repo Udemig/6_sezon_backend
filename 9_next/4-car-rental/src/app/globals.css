@@ -21,8 +21,9 @@
 
 @layer base {
   input,
-  select {
-    @apply text-zinc-800;
+  select,
+  textarea {
+    @apply text-zinc-800!;
   }
 
   h1,

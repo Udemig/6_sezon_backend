@@ -2,12 +2,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./auth";
 import { redirect } from "next/navigation";
 
-export async function getSession(req?: Request) {
+export async function getSession() {
   return await getServerSession(authOptions);
 }
 
-export async function getCurrentUser(req?: Request) {
-  const session = await getSession(req);
+export async function getCurrentUser() {
+  const session = await getSession();
   return session?.user ?? null;
 }
 

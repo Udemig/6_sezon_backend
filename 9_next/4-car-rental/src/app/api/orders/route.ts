@@ -1,19 +1,18 @@
-import { getCurrentUser } from "@/lib/auth-utils";
 import { Order } from "@/lib/models/Order";
 import connectMongo from "@/lib/mongodb";
+import { NextRequestWithAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
-//! TODO ÇALIŞMIYOR..
-export async function GET(req: Request) {
+export async function GET(req: NextRequestWithAuth) {
   try {
     // 1) veritabanına bağlan
     await connectMongo();
 
     // 2) kullanıcı oturum verisini al
-    const user = await getCurrentUser(req);
+    const userId = req.nextUrl.searchParams.get("userId");
 
     // 1.1) kullanıcı oturum verisi yoksa hata dön
-    if (!user) {
+    if (!userId) {
       return NextResponse.json(
         { message: "Kullanıcı bulunamadı" },
         { status: 404 }
@@ -21,7 +20,7 @@ export async function GET(req: Request) {
     }
 
     // 2) kullanıcıya ait sipariş verisini al
-    const orders = await Order.find({ user: user.id }).populate("product");
+    const orders = await Order.find({ user: userId }).populate("product");
 
     // 3) sipariş verisini dön
     return NextResponse.json({

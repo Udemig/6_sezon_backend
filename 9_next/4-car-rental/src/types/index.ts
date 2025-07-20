@@ -70,7 +70,7 @@ export interface IBooking extends mongoose.Document {
 export interface IReview extends mongoose.Document {
   userId: mongoose.Types.ObjectId;
   carId: mongoose.Types.ObjectId;
-  bookingId: mongoose.Types.ObjectId;
+  orderId: mongoose.Types.ObjectId;
   rating: number;
   comment: string;
   isApproved: boolean;
