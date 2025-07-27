@@ -1,4 +1,5 @@
 const ShoppingService = require("../services/shopping-service");
+const { PublishCustomerEvent } = require("../utils");
 const UserAuth = require("./middlewares/auth");
 
 module.exports = (app) => {

@@ -1,6 +1,6 @@
 const ProductService = require("../services/product-service");
 const UserAuth = require("./middlewares/auth");
-const { PublishCustomerEvent } = require("../utils");
+const { PublishCustomerEvent, PublishShoppingEvent } = require("../utils");
 
 module.exports = (app) => {
   const service = new ProductService();
@@ -100,6 +100,7 @@ module.exports = (app) => {
   });
 
   app.put("/cart", UserAuth, async (req, res, next) => {
+    const { _id: userId } = req.user;
     const { _id, qty } = req.body;
 
     try {
@@ -109,7 +110,7 @@ module.exports = (app) => {
       PublishCustomerEvent({
         event: "ADD_TO_CART",
         data: {
-          userId: _id,
+          userId,
           product,
           qty,
         },
@@ -119,7 +120,7 @@ module.exports = (app) => {
       PublishShoppingEvent({
         event: "ADD_TO_CART",
         data: {
-          userId: _id,
+          userId,
           product,
           qty,
         },
@@ -127,6 +128,7 @@ module.exports = (app) => {
 
       return res.status(200).json(product);
     } catch (err) {
+      console.log("HATA", err);
       next(err);
     }
   });
