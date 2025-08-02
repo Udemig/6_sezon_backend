@@ -92,7 +92,7 @@ class ShoppingRepository {
         if (cartItems.length > 0) {
           cartItems = cartItems
             .map((item) => {
-              if (item?._id.toString() === _id.toString()) {
+              if (item?.toString() === _id.toString()) {
                 if (isRemove) {
                   // isRemove true ise ürünü sil
                   return null;

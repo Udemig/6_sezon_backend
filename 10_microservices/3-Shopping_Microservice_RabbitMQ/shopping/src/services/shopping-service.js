@@ -17,7 +17,6 @@ class ShoppingService {
       const orderResult = await this.repository.CreateNewOrder(_id, txnNumber);
       return FormateData(orderResult);
     } catch (err) {
-      console.log("HATA111", err);
       throw new APIError("Data Not found", err);
     }
   }

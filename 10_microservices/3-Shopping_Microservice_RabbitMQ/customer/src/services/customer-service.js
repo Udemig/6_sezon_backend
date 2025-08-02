@@ -38,7 +38,7 @@ class CustomerService {
 
       return FormateData(null);
     } catch (err) {
-      throw new APIError("Data Not found", err);
+      throw new APIError("User not found", err);
     }
   }
 
