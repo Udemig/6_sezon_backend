@@ -8,9 +8,9 @@
 
 - **API Gateway** (port: 3000) : Merkezi giriş noktası
 - **Auth Service** (port: 3001) : Kullanıcı girişi ve yetkilendirme
-- **Restaurant Service** (port: 3002) : Restoran ve menü yönetimi
+- **Delivery Service** (port: 3002) : Kurye ve teslimat takibi
 - **Order Service** (port: 3003) : Sipariş İşlemleri
-- **Delivery Service** (port: 3004) : Kurye ve teslimat takibi
+- **Restaurant Service** (port: 3004) : Restoran ve menü yönetimi
 
 ## Teknolojiler
 
@@ -38,6 +38,8 @@
 POST /api/auth/register  - Kullanıcı Kaydı
 POST /api/auth/login     - Kullanıcı Girişi
 GET /api/auth/profile    - Profil Bilgileri
+POST /api/auth/refresh   - Token Yenile
+POST /api/auth/logout    - Çıkış Yap
 POST /api/auth/address   - Adres Ekleme
 ```
 
