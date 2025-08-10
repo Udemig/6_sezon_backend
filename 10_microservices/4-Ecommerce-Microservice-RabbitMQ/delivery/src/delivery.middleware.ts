@@ -1,7 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import type { IJwtPayload } from "./types/index.ts";
-
 // jwt token doğrulama
 export const authenticate = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -38,4 +37,21 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
       });
     }
   }
+};
+
+// rol kontrolü
+export const authorize = (roles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction): void => {
+    if (!req.user) {
+      res.status(401).json({ message: "Kullanıcı kimlik doğrulaması gerekli" });
+      return;
+    }
+
+    if (!roles.includes(req.user.role)) {
+      res.status(403).json({ message: "Bu işlem için yetkiniz yok" });
+      return;
+    }
+
+    next();
+  };
 };

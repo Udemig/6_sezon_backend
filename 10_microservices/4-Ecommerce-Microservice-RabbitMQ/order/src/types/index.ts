@@ -1,4 +1,6 @@
+import type { Document } from "mongoose";
 import type { NextFunction, Request, Response } from "express";
+import type { Types } from "mongoose";
 
 export type RouteParams = (req: Request, res: Response, next: NextFunction) => Promise<void>;
 
@@ -15,7 +17,6 @@ export interface IAddress {
 }
 
 export interface IUser extends Document {
-  _id?: string;
   email: string;
   password: string;
   firstName: string;
@@ -35,4 +36,36 @@ export interface IJwtPayload {
   role: UserRole;
   iat?: number;
   exp?: number;
+}
+
+// Sipariş Tipleri
+export type OrderStatus = "pending" | "confirmed" | "preparing" | "ready" | "on_the_way" | "delivered" | "cancelled";
+
+export interface OrderItem {
+  productId: Types.ObjectId | string;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
+export interface Address {
+  title?: string;
+  address: string;
+  city: string;
+  district: string;
+  postalCode: string;
+  isDefault?: boolean;
+}
+
+export interface IOrder extends Document {
+  userId: Types.ObjectId | string;
+  restaurantId: Types.ObjectId | string;
+  items: OrderItem[];
+  totalAmount: number;
+  deliveryAddress: Address;
+  paymentMethod: "credit_card" | "cash" | "online";
+  status: OrderStatus;
+  specialInstructions?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

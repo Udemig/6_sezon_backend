@@ -1,0 +1,499 @@
+{
+  "info": {
+    "name": "Food Delivery - Auth & Restaurant",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman collection to test Auth and Restaurant services via API Gateway."
+  },
+  "variable": [
+    { "key": "gatewayBaseUrl", "value": "http://localhost:3000/api", "type": "default" },
+    { "key": "accessToken", "value": "", "type": "default" },
+    { "key": "refreshToken", "value": "", "type": "default" },
+    { "key": "restaurantId", "value": "", "type": "default" },
+    { "key": "orderId", "value": "", "type": "default" },
+    { "key": "userId", "value": "", "type": "default" },
+    { "key": "courierId", "value": "", "type": "default" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "auth": {
+        "type": "bearer",
+        "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }]
+      },
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/auth/register",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["auth", "register"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"owner1@example.com\",\n  \"password\": \"secret123\",\n  \"firstName\": \"Ahmet\",\n  \"lastName\": \"Yılmaz\",\n  \"phone\": \"+905551112233\",\n  \"role\": \"restaurant_owner\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (e) {}",
+                  "const at = json?.data?.accessToken;",
+                  "const rt = json?.data?.refreshToken;",
+                  "const uid = json?.data?.user?.id || json?.data?.user?._id;",
+                  "if (at) { pm.collectionVariables.set('accessToken', at); }",
+                  "if (rt) { pm.collectionVariables.set('refreshToken', rt); }",
+                  "if (uid) { pm.collectionVariables.set('userId', uid); }",
+                  "pm.test('Registered or already exists', function () { pm.expect(pm.response.code).to.be.oneOf([201, 400, 409]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/auth/login",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["auth", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"owner1@example.com\",\n  \"password\": \"secret123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (e) {}",
+                  "const at = json?.data?.accessToken;",
+                  "const rt = json?.data?.refreshToken;",
+                  "const uid = json?.data?.user?.id || json?.data?.user?._id;",
+                  "if (at) { pm.collectionVariables.set('accessToken', at); }",
+                  "if (rt) { pm.collectionVariables.set('refreshToken', rt); }",
+                  "if (uid) { pm.collectionVariables.set('userId', uid); }",
+                  "pm.test('Login successful', function () { pm.expect(pm.response.code).to.be.oneOf([200, 201]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Profile (requires auth)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/auth/profile",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["auth", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Add Address (requires auth)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/auth/add-address",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["auth", "add-address"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Ev\",\n  \"address\": \"İstiklal Cad. No:1\",\n  \"city\": \"İstanbul\",\n  \"district\": \"Beyoğlu\",\n  \"postalCode\": 34000,\n  \"isDefault\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Refresh Access Token (uses refreshToken cookie)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const rt = pm.collectionVariables.get('refreshToken');",
+                  "if (rt) { pm.request.headers.add({ key: 'Cookie', value: `refreshToken=${rt}` }); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (e) {}",
+                  "const at = json?.accessToken;",
+                  "if (at) { pm.collectionVariables.set('accessToken', at); }",
+                  "pm.test('Refreshed', function () { pm.expect(pm.response.code).to.be.oneOf([200]); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/auth/refresh",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["auth", "refresh"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/auth/logout",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["auth", "logout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Restaurant",
+      "auth": {
+        "type": "bearer",
+        "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }]
+      },
+      "item": [
+        {
+          "name": "List Restaurants",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/restaurant/restaurants?limit=10&page=1&category=Burger&rating=4&deliveryTime=40&minOrder=0",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["restaurant", "restaurants"],
+              "query": [
+                { "key": "limit", "value": "10" },
+                { "key": "page", "value": "1" },
+                { "key": "category", "value": "Burger" },
+                { "key": "rating", "value": "4" },
+                { "key": "deliveryTime", "value": "40" },
+                { "key": "minOrder", "value": "0" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Restaurant (owner/admin)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/restaurant/restaurants",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["restaurant", "restaurants"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Burger Planet\",\n  \"description\": \"En iyi burgerler burada\",\n  \"address\": \"Kadıköy, İstanbul\",\n  \"phone\": \"+902121234567\",\n  \"email\": \"burgerplanet@example.com\",\n  \"categories\": [\"Burger\", \"Fast Food\"],\n  \"deliveryTime\": 30,\n  \"minOrder\": 50,\n  \"deliveryFee\": 10,\n  \"rating\": 4.5,\n  \"isActive\": true,\n  \"isOpen\": true,\n  \"openingHours\": {\n    \"monday\": \"10:00-22:00\",\n    \"tuesday\": \"10:00-22:00\",\n    \"wednesday\": \"10:00-22:00\",\n    \"thursday\": \"10:00-22:00\",\n    \"friday\": \"10:00-23:00\",\n    \"saturday\": \"11:00-23:00\",\n    \"sunday\": \"11:00-21:00\"\n  }\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (e) {}",
+                  "const id = json?.data?.id || json?.data?._id || json?.id || json?._id;",
+                  "if (id) { pm.collectionVariables.set('restaurantId', id); }",
+                  "pm.test('Created', function () { pm.expect(pm.response.code).to.be.oneOf([201, 200]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Restaurant By Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/restaurant/restaurants/{{restaurantId}}",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["restaurant", "restaurants", "{{restaurantId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Restaurant Menu",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/restaurant/restaurants/{{restaurantId}}/menu?category=Burger",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["restaurant", "restaurants", "{{restaurantId}}", "menu"],
+              "query": [{ "key": "category", "value": "Burger" }]
+            }
+          }
+        },
+        {
+          "name": "Add Menu Item",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/restaurant/restaurants/{{restaurantId}}/menu",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["restaurant", "restaurants", "{{restaurantId}}", "menu"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": \"{{restaurantId}}\",\n  \"name\": \"Cheeseburger\",\n  \"description\": \"Çedar peynirli burger\",\n  \"price\": 120,\n  \"category\": \"Burger\",\n  \"imageUrl\": \"https://example.com/burger.jpg\",\n  \"ingredients\": [\"Dana eti\", \"Cheddar\", \"Marul\", \"Domates\"],\n  \"allergens\": [\"Süt\", \"Gluten\"],\n  \"isVegetarian\": false,\n  \"isAvailable\": true,\n  \"preparationTime\": 20\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Order",
+      "auth": {
+        "type": "bearer",
+        "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }]
+      },
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{gatewayBaseUrl}}/order/", "host": ["{{gatewayBaseUrl}}"], "path": ["order", ""] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurantId\": \"{{restaurantId}}\",\n  \"items\": [\n    { \"productId\": \"p1\", \"name\": \"Cheeseburger\", \"price\": 120, \"quantity\": 2 },\n    { \"productId\": \"p2\", \"name\": \"Limonata\", \"price\": 35, \"quantity\": 1 }\n  ],\n  \"deliveryAddress\": {\n    \"title\": \"Ev\",\n    \"address\": \"İstiklal Cad. No:1\",\n    \"city\": \"İstanbul\",\n    \"district\": \"Beyoğlu\",\n    \"postalCode\": \"34000\",\n    \"isDefault\": true\n  },\n  \"paymentMethod\": \"online\",\n  \"specialInstructions\": \"Acı sos ayrı olsun\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch(e) {}",
+                  "const id = json?.order?.id || json?.order?._id;",
+                  "if (id) pm.collectionVariables.set('orderId', id);",
+                  "pm.test('Order created', function(){ pm.expect(pm.response.code).to.be.oneOf([201]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Order By Id",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/order/{{orderId}}",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["order", "{{orderId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Orders By User",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/order/user/{{userId}}",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["order", "user", "{{userId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Order Status (admin/owner)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/order/{{orderId}}/status",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["order", "{{orderId}}", "status"]
+            },
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"preparing\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Delivery",
+      "auth": {
+        "type": "bearer",
+        "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }]
+      },
+      "item": [
+        {
+          "name": "Register Courier",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/delivery/couriers/register",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["delivery", "couriers", "register"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"courier1@example.com\",\n  \"password\": \"secret123\",\n  \"firstName\": \"Mehmet\",\n  \"lastName\": \"Demir\",\n  \"phone\": \"+905551112244\",\n  \"vehicleType\": \"motorcycle\",\n  \"vehiclePlate\": \"34ABC123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (e) {}",
+                  "const token = json?.data?.token;",
+                  "const cid = json?.data?.courier?.id || json?.data?.courier?._id;",
+                  "if (token) { pm.collectionVariables.set('accessToken', token); }",
+                  "if (cid) { pm.collectionVariables.set('courierId', cid); }",
+                  "pm.test('Courier registered', function () { pm.expect(pm.response.code).to.be.oneOf([201, 200]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login Courier",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/delivery/couriers/login",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["delivery", "couriers", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"courier1@example.com\",\n  \"password\": \"secret123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (e) {}",
+                  "const token = json?.data?.token;",
+                  "const cid = json?.data?.courier?.id || json?.data?.courier?._id;",
+                  "if (token) { pm.collectionVariables.set('accessToken', token); }",
+                  "if (cid) { pm.collectionVariables.set('courierId', cid); }",
+                  "pm.test('Courier login', function () { pm.expect(pm.response.code).to.be.oneOf([200]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Courier Status",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/delivery/couriers/status",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["delivery", "couriers", "status"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"available\",\n  \"location\": { \n    \"latitude\": 41.015137, \n    \"longtitude\": 28.979530 \n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Courier Performance (admin)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/delivery/couriers/{{courierId}}/performance",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["delivery", "couriers", "{{courierId}}", "performance"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"deliveriesCompleted\": 10,\n  \"averageRating\": 4.5,\n  \"totalEarnings\": 1250,\n  \"period\": \"weekly\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Available Orders",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/delivery/orders",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["delivery", "orders"]
+            }
+          }
+        },
+        {
+          "name": "Accept Delivery",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/delivery/orders/{{orderId}}/accept",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["delivery", "orders", "{{orderId}}", "accept"]
+            }
+          }
+        },
+        {
+          "name": "Update Delivery Status",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/delivery/orders/{{orderId}}/status",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["delivery", "orders", "{{orderId}}", "status"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"in_transit\",\n  \"location\": { \n    \"latitude\": 41.015137, \n    \"longtitude\": 28.979530 \n  },\n  \"estimatedArrival\": 25,\n  \"notes\": \"Yoğun trafik var\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Track Delivery",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{gatewayBaseUrl}}/delivery/orders/{{orderId}}/tracking",
+              "host": ["{{gatewayBaseUrl}}"],
+              "path": ["delivery", "orders", "{{orderId}}", "tracking"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
