@@ -94,7 +94,7 @@ class DeliveryService {
   async getAvailableOrders(courierId: string) {
     const deliveries = await DeliveryTracking.find({
       status: { $in: ["pending", "ready"] },
-      courierId: { $exists: false },
+      courierId: null,
     });
 
     return {
@@ -107,10 +107,11 @@ class DeliveryService {
 
   async acceptDelivery(orderId: string, courierId: string) {
     const delivery = await DeliveryTracking.findOneAndUpdate(
-      { orderId, courierId: { $exists: false } },
+      { orderId, courierId: null },
       { courierId, status: "assigned", acceptedAt: new Date() },
       { new: true }
     );
+    await Courier.findByIdAndUpdate(courierId, { status: "busy", isAvailable: false });
 
     return {
       status: "success",

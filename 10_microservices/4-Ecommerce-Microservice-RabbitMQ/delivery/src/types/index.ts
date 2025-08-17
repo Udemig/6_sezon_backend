@@ -76,3 +76,35 @@ export interface ICourier extends Document {
   createdAt: Date;
   updatedAt: Date;
 }
+
+// Sipariş Tipleri
+export type OrderStatus = "pending" | "confirmed" | "preparing" | "ready" | "on_the_way" | "delivered" | "cancelled";
+
+export interface OrderItem {
+  productId: Types.ObjectId | string;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
+export interface Address {
+  title?: string;
+  address: string;
+  city: string;
+  district: string;
+  postalCode: string;
+  isDefault?: boolean;
+}
+
+export interface IOrder extends Document {
+  userId: Types.ObjectId | string;
+  restaurantId: Types.ObjectId | string;
+  items: OrderItem[];
+  totalAmount: number;
+  deliveryAddress: Address;
+  paymentMethod: "credit_card" | "cash" | "online";
+  status: OrderStatus;
+  specialInstructions?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

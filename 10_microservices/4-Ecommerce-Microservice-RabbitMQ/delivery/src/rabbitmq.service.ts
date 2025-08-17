@@ -1,5 +1,7 @@
 import type { Channel, ChannelModel } from "amqplib";
 import amqp from "amqplib";
+import type { IOrder } from "./types/index.ts";
+import { Courier, DeliveryTracking } from "./delivery.model.ts";
 
 class RabbitMQService {
   private connection: ChannelModel | null = null;
@@ -37,9 +39,9 @@ class RabbitMQService {
       // Queue'ları dinle
       await this.listenToDeliveryQueue();
 
-      console.log("Order Service RabbitMQ bağlantısı başarılı");
+      console.log("Delivery Service RabbitMQ bağlantısı başarılı");
     } catch (error) {
-      console.error("Order Service RabbitMQ bağlantısı hatası:", error);
+      console.error("Delivery Service RabbitMQ bağlantısı hatası:", error);
     }
   }
 
@@ -53,8 +55,34 @@ class RabbitMQService {
 
     await this.channel.consume(this.deliveryQueue, async (message) => {
       // befferdan json verisine çevir
-      const deliveryMessage = JSON.parse(message!.content.toString());
-      console.log("Teslimat isteği geldi:", deliveryMessage);
+      const deliveryMessage = JSON.parse(message!.content.toString()) as IOrder;
+
+      if (deliveryMessage.status === "pending") {
+        // eğer sipariş durumu pending ise yeni bir delivery tracking oluştur
+        const deliveryTracking = await DeliveryTracking.create({
+          orderId: deliveryMessage.id,
+          courierId: null,
+          status: "pending",
+          estimatedDeliveryTime: new Date(Date.now() + 60 * 60 * 1000),
+          notes: deliveryMessage.specialInstructions,
+        });
+
+        // müsait kurye bul
+        const courier = await Courier.findOne({ status: "available", isAvailable: true }).sort({ createdAt: 1 });
+
+        // kuryeyi siparişe ata
+        if (courier) {
+          // sipariş verisini güncelle
+          await DeliveryTracking.findByIdAndUpdate(deliveryTracking.id, { courierId: courier.id, status: "assigned" });
+          // kurye durumunu güncelle
+          await Courier.findByIdAndUpdate(courier.id, { status: "busy", isAvailable: false });
+        }
+      }
+
+      // eğer sipariş durumu ready ise delivery tracking'i güncelle
+      if (deliveryMessage.status === "ready") {
+        await DeliveryTracking.findOneAndUpdate({ orderId: deliveryMessage.id }, { status: "ready" });
+      }
     });
   }
 }

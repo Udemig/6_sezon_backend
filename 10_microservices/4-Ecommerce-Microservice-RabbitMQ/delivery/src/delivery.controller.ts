@@ -15,6 +15,12 @@ class DeliveryController {
 
     const result = await DeliveryService.register(registerData);
 
+    res.cookie("accessToken", result.data.token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+    });
+
     res.status(201).json(result);
   });
 
@@ -22,6 +28,12 @@ class DeliveryController {
     const loginData = await validateDto(courierLoginSchema, req.body);
 
     const result = await DeliveryService.login(loginData);
+
+    res.cookie("accessToken", result.data.token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+    });
 
     res.status(200).json(result);
   });
@@ -36,7 +48,8 @@ class DeliveryController {
   });
 
   getCourierPerformance = catchAsync(async (req, res, next) => {
-    const courierId = req.user?.userId as string;
+    const courierId = req.params?.courierId as string;
+
     const result = await DeliveryService.getCourierPerformance(courierId);
 
     res.status(200).json(result);
