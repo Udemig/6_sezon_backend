@@ -1,0 +1,238 @@
+{
+	"info": {
+		"_postman_id": "0b899fa3-e9ba-4aeb-9c53-6373958218b1",
+		"name": "Bookmark",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26044730",
+		"_collection_link": "https://www.postman.com/winter-flare-727325/workspace/6-backend/collection/26044730-0b899fa3-e9ba-4aeb-9c53-6373958218b1?action=share&source=collection_link&creator=26044730"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"furkanevin2@gmail.com\",\n    \"password\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "http://localhost:3000/auth/signup"
+					},
+					"response": []
+				},
+				{
+					"name": "refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsImVtYWlsIjoiZnVya2FuZXZpbjJAZ21haWwuY29tIiwiaWF0IjoxNzU2MDI2NzcyLCJleHAiOjE3NTY2MzE1NzJ9.s3t2pnpZs9o8q4JHAmtP59pkCO1zo9O4UgxqdFdyERE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/auth/refresh"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImVtYWlsIjoiZnVya2FuZXZpbjM1QGdtYWlsLmNvbSIsImlhdCI6MTc1NjAzNjIxMywiZXhwIjoxNzU2MDM3MTEzfQ.pmBxU4aTrNg4DDj-Lg6Ml0Y7EU3PXPpfS8ARKqOUwmM"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/user/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImVtYWlsIjoiZnVya2FuZXZpbjM1QGdtYWlsLmNvbSIsImlhdCI6MTc1NjAzNjIxMywiZXhwIjoxNzU2MDM3MTEzfQ.pmBxU4aTrNg4DDj-Lg6Ml0Y7EU3PXPpfS8ARKqOUwmM"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Ali\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/user/update"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "bookmark",
+			"item": [
+				{
+					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsImVtYWlsIjoiZnVya2FuZXZpbjJAZ21haWwuY29tIiwiaWF0IjoxNzU2MDM2NDUwLCJleHAiOjE3NTYwMzczNTB9.79JrBxDsu2vFNx7ZDRwchAsimzR9mMV2sZlB2OtQzvk"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "http://localhost:3000/bookmark"
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsImVtYWlsIjoiZnVya2FuZXZpbjJAZ21haWwuY29tIiwiaWF0IjoxNzU2MDMzNzQ4LCJleHAiOjE3NTYwMzQ2NDh9.uHJsbNvpZ6ry3kDt8_ZWEcLEoLNB72Z1XjT_0N9AhgM"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"Mutlaka Oku\",\n    \"description\":\"Geçen internette gördüm\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/bookmark"
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsImVtYWlsIjoiZnVya2FuZXZpbjJAZ21haWwuY29tIiwiaWF0IjoxNzU2MDM2MzQwLCJleHAiOjE3NTYwMzcyNDB9.eU_Q1zqU57pogH6774MwoB-Z4Jba1z6qf5mL3Iq6m48"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/bookmark/3"
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsImVtYWlsIjoiZnVya2FuZXZpbjJAZ21haWwuY29tIiwiaWF0IjoxNzU2MDM2NDUwLCJleHAiOjE3NTYwMzczNTB9.79JrBxDsu2vFNx7ZDRwchAsimzR9mMV2sZlB2OtQzvk"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"selam 123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/bookmark/3"
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsImVtYWlsIjoiZnVya2FuZXZpbjJAZ21haWwuY29tIiwiaWF0IjoxNzU2MDM2NDUwLCJleHAiOjE3NTYwMzczNTB9.79JrBxDsu2vFNx7ZDRwchAsimzR9mMV2sZlB2OtQzvk"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:3000/bookmark/3"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImVtYWlsIjoiZnVya2FuZXZpbjM1QGdtYWlsLmNvbSIsImlhdCI6MTc1NjAzNjExOSwiZXhwIjoxNzU2MDM3MDE5fQ.e9njnqsac6T5rHKWbYBLYPE4weFqSyd9KK_h07J-6tY"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
