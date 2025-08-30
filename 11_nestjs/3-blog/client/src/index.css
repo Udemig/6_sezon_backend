@@ -1,0 +1,50 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kumbh+Sans:wght@100..900&display=swap");
+
+@theme {
+  --font-sans: "Kumbh Sans", sans-serif;
+  --font-inter: "Inter", sans-serif;
+
+  --color-white: #fff;
+  --color-black: #000;
+
+  --color-yellow-55: #ffd71a;
+  --color-yellow-60: #ffed33;
+  --color-yellow-70: #ffe566;
+  --color-yellow-80: #ffed99;
+  --color-yellow-90: #fff5cc;
+  --color-yellow-95: #fffae5;
+  --color-yellow-97: #fffdf0;
+  --color-yellow-99: #fffefe;
+
+  --color-dark-08: #141414;
+  --color-dark-10: #1a1a1a;
+  --color-dark-15: #262626;
+  --color-dark-20: #333333;
+  --color-dark-25: #404040;
+  --color-dark-30: #4d4d4d;
+  --color-dark-35: #595959;
+  --color-dark-40: #666666;
+  --color-grey-50: #7f7f81;
+  --color-grey-60: #99999a;
+  --color-grey-70: #b3b3b3;
+  --color-grey-80: #cccccc;
+  --color-grey-90: #e6e6e7;
+  --color-grey-95: #f3f3f3;
+  --color-grey-97: #f7f7f8;
+  --color-grey-99: #fcfcfc;
+}
+
+@layer components {
+  .padding-x {
+    @apply px-4 md:px-[30px] lg:px-[40px] xl:px-[80px] 2xl:px-[160px];
+  }
+
+  .dropdown-item {
+    @apply hover:bg-zinc-700/80 transition px-3 py-1 rounded-md cursor-pointer whitespace-nowrap w-full;
+  }
+
+  .submit-button {
+    @apply flex w-full justify-center rounded-md bg-yellow-55 px-3 py-1.5 text-sm/6 font-semibold shadow-xs hover:bg-yellow-60 cursor-pointer focus:outline-2  focus:outline-offset-2 focus:outline-indigo-600 text-black;
+  }
+}
