@@ -21,7 +21,11 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   @Post('register')
   async register(@Body() dto: RegisterDto) {
-    return await this.authService.register(dto);
+    const user = await this.authService.register(dto);
+
+    const { password, ...rest } = user;
+
+    return rest;
   }
 
   @Post('login')

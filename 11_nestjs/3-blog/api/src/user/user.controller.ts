@@ -20,7 +20,7 @@ export class UserController {
   getProfile(@Request() req: RequestType) {
     const { password, ...rest } = req.user as Express.User;
 
-    return { user: rest };
+    return rest;
   }
 
   @UseGuards(AuthGuard('access'))
@@ -30,6 +30,6 @@ export class UserController {
 
     const { password, ...rest } = user;
 
-    return { user: rest };
+    return rest;
   }
 }

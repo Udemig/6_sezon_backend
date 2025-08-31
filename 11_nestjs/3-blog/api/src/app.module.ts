@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { BlogModule } from './blog/blog.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UserModule } from './user/user.module';
     // Mongoose module ile MongoDB'ye bağlanıyoruz.
     MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost/nest'),
     UserModule,
+    BlogModule,
   ],
   controllers: [AppController],
   providers: [AppService],

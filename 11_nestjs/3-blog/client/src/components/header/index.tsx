@@ -1,7 +1,10 @@
 import { IoMdArrowRoundUp as Arrow } from "react-icons/io";
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../../context/auth-context";
 
 const Header = () => {
+  const { loading, user, logout } = useAuth();
+
   return (
     <header>
       <div className="bg-dark-08 text-sm md:text-base text-center px-4 py-2 md:px-6 md:py-3 font-inter flex justify-center gap-2">
@@ -29,7 +32,7 @@ const Header = () => {
 
         {/* Login ve Register */}
         <div>
-          {true ? (
+          {loading || !user ? (
             <Link
               to="/register"
               className="bg-yellow-55 text-black px-3 py-1 text-sm md:text-base rounded cursor-pointer"
@@ -38,13 +41,15 @@ const Header = () => {
             </Link>
           ) : (
             <div className="group relative text-sm md:text-base">
-              <span>Selam John</span>
+              <span>{user.username}</span>
 
               <div className="hidden group-hover:block absolute top-5 -right-2 bg-black p-1 rounded-md">
                 <button className="dropdown-item">
                   <Link to="/blog/create">Blog Yaz</Link>
                 </button>
-                <button className="dropdown-item">Çıkış Yap</button>
+                <button onClick={logout} className="dropdown-item">
+                  Çıkış Yap
+                </button>
               </div>
             </div>
           )}

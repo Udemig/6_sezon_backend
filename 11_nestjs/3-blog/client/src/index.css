@@ -47,4 +47,8 @@
   .submit-button {
     @apply flex w-full justify-center rounded-md bg-yellow-55 px-3 py-1.5 text-sm/6 font-semibold shadow-xs hover:bg-yellow-60 cursor-pointer focus:outline-2  focus:outline-offset-2 focus:outline-indigo-600 text-black;
   }
+
+  .small-text {
+    @apply text-grey-50 text-sm md:text-base xl:text-lg;
+  }
 }
