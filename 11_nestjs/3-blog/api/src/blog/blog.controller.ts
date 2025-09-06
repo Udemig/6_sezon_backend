@@ -54,9 +54,17 @@ export class BlogController {
 
   @UseGuards(AccessGuard)
   @Patch(':id')
-  update(@Body() dto: UpdateBlogDto) {}
+  update(
+    @Request() req: RequestType,
+    @Param('id') id: string,
+    @Body() dto: UpdateBlogDto,
+  ) {
+    return this.blogService.update(req.user as UserType, id, dto);
+  }
 
   @UseGuards(AccessGuard)
   @Delete(':id')
-  delete() {}
+  delete(@Request() req: RequestType, @Param('id') id: string) {
+    return this.blogService.delete(req.user as UserType, id);
+  }
 }

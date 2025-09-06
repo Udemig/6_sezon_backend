@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { BlogModule } from './blog/blog.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { BlogModule } from './blog/blog.module';
     MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost/nest'),
     UserModule,
     BlogModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

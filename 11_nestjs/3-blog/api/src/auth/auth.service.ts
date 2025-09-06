@@ -34,11 +34,11 @@ export class AuthService {
     }
 
     const accessToken = this.generateAccessToken(
-      user._id as string,
+      user.id as string,
       user.username,
     );
     const refreshToken = this.generateRefreshToken(
-      user._id as string,
+      user.id as string,
       user.username,
     );
 

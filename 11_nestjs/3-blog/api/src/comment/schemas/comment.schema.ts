@@ -17,30 +17,19 @@ import mongoose, { Document } from 'mongoose';
   },
   versionKey: false,
 })
-export class Blog {
-  @Prop({ required: true })
-  title: string;
-
+export class Comment extends Document {
   @Prop({ required: true })
   content: string;
 
-  @Prop()
-  photo: string;
+  @Prop({ required: true, ref: 'Blog', type: mongoose.Schema.Types.ObjectId })
+  blog: string;
 
-  @Prop()
-  tags: string[];
-
-  @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  author: string;
+  @Prop({ required: true, ref: 'User', type: mongoose.Schema.Types.ObjectId })
+  user: string;
 }
 
-const BlogSchema = SchemaFactory.createForClass(Blog);
+const CommentSchema = SchemaFactory.createForClass(Comment);
 
-// tranform _id to id
-BlogSchema.virtual('id').get(function () {
-  return this._id.toString();
-});
+export type CommentDocument = Comment & Document;
 
-export type BlogDocument = Blog & Document;
-
-export { BlogSchema };
+export { CommentSchema };

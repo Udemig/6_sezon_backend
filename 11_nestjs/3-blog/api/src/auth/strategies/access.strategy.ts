@@ -23,6 +23,7 @@ export class AccessStrategy extends PassportStrategy(Strategy, 'access') {
 
   // tokenı doğruladıktan sonra çalışır
   async validate(payload: any) {
+    console.log(payload);
     // payload'ın içindeki kullanıcı id'sine sahip kullanıcı mevcut mu
     const user = await this.userService.findById(payload.userId);
 

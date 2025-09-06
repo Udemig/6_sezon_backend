@@ -5,6 +5,7 @@ import Register from "./pages/register";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import Protected from "./components/protected";
+import Detail from "./pages/detail";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/blog/:id" element={<Detail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 

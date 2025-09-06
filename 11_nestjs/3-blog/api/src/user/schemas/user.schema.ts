@@ -2,7 +2,22 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import bcrypt from 'bcrypt';
 import { Document } from 'mongoose';
 
-@Schema({ timestamps: true })
+@Schema({
+  timestamps: true,
+  toJSON: {
+    virtuals: true,
+    transform: (doc, ret: Record<string, any>) => {
+      delete ret?._id;
+    },
+  },
+  toObject: {
+    virtuals: true,
+    transform: (doc, ret: Record<string, any>) => {
+      delete ret?._id;
+    },
+  },
+  versionKey: false,
+})
 export class User {
   @Prop({ required: true, unique: true })
   username: string;

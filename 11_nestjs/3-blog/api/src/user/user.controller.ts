@@ -26,7 +26,7 @@ export class UserController {
   @UseGuards(AuthGuard('access'))
   @Patch('me')
   async updateProfile(@Request() req: RequestType, @Body() dto: UpdateUserDto) {
-    const user = await this.userService.update(req.user!._id, dto);
+    const user = await this.userService.update(req.user!.id, dto);
 
     const { password, ...rest } = user;
 

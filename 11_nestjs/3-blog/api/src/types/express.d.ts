@@ -3,13 +3,6 @@ import { UserType } from '.';
 
 declare global {
   namespace Express {
-    // interface User {
-    //   _id: string;
-    //   username: string;
-    //   email: string;
-    //   password: string;
-    // }
-
     interface User extends UserType {}
   }
 

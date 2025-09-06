@@ -51,4 +51,8 @@
   .small-text {
     @apply text-grey-50 text-sm md:text-base xl:text-lg;
   }
+
+  .post-btn {
+    @apply border border-zinc-700 bg-zinc-800 p-1 w-[70px] flex items-center justify-center gap-2 rounded-full cursor-pointer hover:bg-zinc-900 text-gray-300;
+  }
 }

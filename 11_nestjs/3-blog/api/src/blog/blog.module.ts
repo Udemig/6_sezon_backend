@@ -10,5 +10,6 @@ import { Blog, BlogSchema } from './schemas/blog.schema';
   ],
   providers: [BlogService],
   controllers: [BlogController],
+  exports: [BlogService],
 })
 export class BlogModule {}

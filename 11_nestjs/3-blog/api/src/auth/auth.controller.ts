@@ -57,7 +57,7 @@ export class AuthController {
     @Response({ passthrough: true }) res: ResponseType,
   ) {
     const accessToken = this.authService.generateAccessToken(
-      req.user?._id as string,
+      req.user?.id as string,
       req.user?.username as string,
     );
 
