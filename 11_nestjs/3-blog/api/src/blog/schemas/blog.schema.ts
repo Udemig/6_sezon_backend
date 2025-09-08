@@ -32,13 +32,17 @@ export class Blog {
 
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   author: string;
+
+  commentCount?: number;
 }
 
 const BlogSchema = SchemaFactory.createForClass(Blog);
 
-// tranform _id to id
-BlogSchema.virtual('id').get(function () {
-  return this._id.toString();
+BlogSchema.virtual('commentCount', {
+  ref: 'Comment',
+  localField: '_id',
+  foreignField: 'blog',
+  count: true,
 });
 
 export type BlogDocument = Blog & Document;

@@ -17,7 +17,7 @@ export class CreateBlogDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
-  @MaxLength(1000)
+  @MaxLength(2000)
   content: string;
 
   @IsString()

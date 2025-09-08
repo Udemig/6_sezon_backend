@@ -16,7 +16,7 @@ export class UpdateBlogDto {
   @IsString()
   @IsOptional()
   @MinLength(3)
-  @MaxLength(1000)
+  @MaxLength(2000)
   content: string;
 
   @IsString()

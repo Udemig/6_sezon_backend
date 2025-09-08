@@ -14,6 +14,7 @@ export class CommentService {
   ) {}
 
   async create(user: UserType, blogId: string, dto: CreateCommentDto) {
+    console.log(user, blogId, dto);
     // göderi id'si geçerli mi kontrol et
     const blog = await this.blogService.findById(blogId);
 

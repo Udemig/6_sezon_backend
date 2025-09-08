@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import PageLoader from "../../components/loader/page-loader";
 import Error from "../../components/error";
 import Comments from "../../components/comments";
+import ReactMarkdown from "react-markdown";
 
 const Detail: FC = () => {
   const { id } = useParams();
@@ -19,9 +20,9 @@ const Detail: FC = () => {
         <h1 className="text-4xl md:text-5xl text-center">{data?.title}</h1>
       </div>
 
-      <div className="grid grid-cols-[3fr_1fr] mt-5 border-b border-dark-20">
-        <div className="p-5">
-          <p>{data?.content}</p>
+      <div className="flex flex-col-reverse md:grid md:grid-cols-[3fr_1fr] mt-5 border-b border-dark-20">
+        <div className="p-5 prose prose-invert">
+          <ReactMarkdown>{data?.content}</ReactMarkdown>
         </div>
 
         <div className="border-l border-dark-20">
@@ -36,9 +37,9 @@ const Detail: FC = () => {
             </span>
           </p>
 
-          <div className="flex flex-col gap-5 px-3 md:px-5 py-5">
+          <div className="flex flex-wrap md:flex-col gap-5 px-3 md:px-5 py-5">
             {data?.tags.map((tag) => (
-              <div key={tag} className="bg-zinc-900 border border-zinc-700 rounded-md text-center">
+              <div key={tag} className="bg-zinc-900 border border-zinc-700 rounded-md text-center px-4 py-1">
                 {tag}
               </div>
             ))}

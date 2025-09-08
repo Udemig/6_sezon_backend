@@ -26,6 +26,7 @@ export class BlogService {
       this.blogModel
         .find(user ? { author: user.id } : {})
         .populate('author', '-password -__v')
+        .populate('commentCount')
         .skip((page - 1) * limit)
         .limit(limit),
 
@@ -36,7 +37,10 @@ export class BlogService {
   }
 
   async findById(id: string) {
-    const blog = await this.blogModel.findById(id);
+    const blog = await this.blogModel
+      .findById(id)
+      .populate('author', '-password -__v')
+      .populate('commentCount');
 
     if (!blog) {
       throw new NotFoundException();

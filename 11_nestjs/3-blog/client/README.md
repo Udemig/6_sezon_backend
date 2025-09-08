@@ -8,3 +8,6 @@
 - react-icons
 - react-toastify
 - tailwindcss
+- easymde
+- react-simplemde-editor
+- react-markdown

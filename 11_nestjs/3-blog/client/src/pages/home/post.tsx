@@ -46,7 +46,7 @@ const Post: FC<Props> = ({ data }) => {
 
           <button className="post-btn">
             <FaRegComment />
-            <span className="text-sm">{99}</span>
+            <span className="text-sm">{data.commentCount}</span>
           </button>
 
           <button className="post-btn">

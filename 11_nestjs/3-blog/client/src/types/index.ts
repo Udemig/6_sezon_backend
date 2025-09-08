@@ -32,6 +32,7 @@ interface Blog {
   title: string;
   content: string;
   tags: string[];
+  commentCount: number;
   author: {
     id: string;
     username: string;
@@ -60,6 +61,21 @@ interface CreateBlogValues {
   tags: string[];
 }
 
+interface Comment {
+  content: string;
+  blog: string;
+  user: {
+    username: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    id: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+  id: string;
+}
+
 export type {
   RegisterValues,
   LoginValues,
@@ -70,4 +86,5 @@ export type {
   GetBlogResponse,
   GetBlogParams,
   CreateBlogValues,
+  Comment,
 };

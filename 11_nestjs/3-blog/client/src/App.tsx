@@ -6,6 +6,8 @@ import Header from "./components/header";
 import Footer from "./components/footer";
 import Protected from "./components/protected";
 import Detail from "./pages/detail";
+import BlogForm from "./pages/form";
+import OwnBlogs from "./pages/own-blogs";
 
 const App = () => {
   return (
@@ -20,9 +22,9 @@ const App = () => {
           <Route path="/register" element={<Register />} />
 
           <Route element={<Protected />}>
-            <Route path="/blog/create" element={<h1>CRATE</h1>} />
-            <Route path="/blog/:id/edit" element={<h1>EDIT</h1>} />
-            <Route path="/own-blogs" element={<h1>OWN</h1>} />
+            <Route path="/blog/create" element={<BlogForm />} />
+            <Route path="/blog/:id/edit" element={<BlogForm />} />
+            <Route path="/own-blogs" element={<OwnBlogs />} />
           </Route>
         </Routes>
       </main>
