@@ -3,7 +3,7 @@ import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { mdeOptions, reactSelectOptions } from "../../utils/constants";
 import ReactSelect from "react-select/creatable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useBlog, useCreateBlog, useUpdateBlog } from "../../hooks/blog.hooks";
 import PageLoader from "../../components/loader/page-loader";
 
@@ -15,9 +15,16 @@ const BlogForm = () => {
   const { mutate: updateMutate, isPending: updatePending } = useUpdateBlog();
 
   // form değerleri
-  const [title, setTitle] = useState<string>(blogData?.title || "");
-  const [content, setContent] = useState<string>(blogData?.content || "");
-  const [tags, setTags] = useState<string[]>(blogData?.tags || []);
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
+  const [tags, setTags] = useState<string[]>([]);
+
+  // sayfa yüklendiğinde form state'lerini güncelle
+  useEffect(() => {
+    setTitle(blogData?.title || "");
+    setContent(blogData?.content || "");
+    setTags(blogData?.tags || []);
+  }, [blogData]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

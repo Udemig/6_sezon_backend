@@ -43,7 +43,7 @@ const Header = () => {
             <div className="group relative text-sm md:text-base">
               <span>{user.username}</span>
 
-              <div className="hidden group-hover:block absolute top-5 -right-2 bg-black p-1 rounded-md">
+              <div className="z-[99999] hidden group-hover:block absolute top-5 -right-2 bg-black p-1 rounded-md">
                 <button className="dropdown-item">
                   <Link to="/blog/create">Blog Yaz</Link>
                 </button>

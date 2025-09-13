@@ -1,12 +1,12 @@
 const loginInitialValues = {
   username: "",
-  password: "Denem@123",
+  password: "",
 };
 
 const registerInitialValues = {
   username: "",
   email: "",
-  password: "Denem@123",
+  password: "",
 };
 
 const mdeOptions = {

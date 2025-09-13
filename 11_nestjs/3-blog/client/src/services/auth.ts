@@ -9,7 +9,7 @@ const authService = {
 
   register: async (values: RegisterValues) => {
     const res = await api.post<User>("auth/register", values);
-    return res.data;
+    return res?.data;
   },
 
   logout: async () => {

@@ -26,7 +26,7 @@ api.interceptors.response.use(
       !originalRequest.retry &&
       originalRequest.url === "user/me" &&
       err.response.status === 401 &&
-      err.response.data.message === "Unauthorized"
+      err?.response?.data?.message === "Unauthorized"
     ) {
       // isteği tekrar atıcağımız için retry'i true yap
       originalRequest.retry = true;
@@ -43,11 +43,11 @@ api.interceptors.response.use(
 
         // login sayfasına yönlendir
         window.location.href = "/login";
-
-        // hata döndür
-        return Promise.reject(error);
       }
     }
+
+    // hata döndür
+    return Promise.reject(err);
   }
 );
 
